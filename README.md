@@ -11,7 +11,7 @@ Guest replies are saved by a small Vercel function (`api/rsvp.js`) into **Vercel
 It's free on the Hobby plan (no extra account, no card). You read replies at **`https://your-url/admin`** with a password.
 
 1. In the Vercel dashboard, open this project → **Storage** → **Create** → **Blob**. Pick **Private** if it asks, then connect it to this project.
-   This adds `BLOB_READ_WRITE_TOKEN` to the project automatically.
+   This adds `BLOB_STORE_ID` to the project automatically (older stores add `BLOB_READ_WRITE_TOKEN`; both work).
 2. Project → **Settings → Environment Variables** → add `ADMIN_PASSWORD` with a password of your choice.
 3. **Redeploy** (Deployments → ⋯ → Redeploy) so the function picks up both.
 

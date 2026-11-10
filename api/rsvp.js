@@ -8,10 +8,18 @@ const PREFIX = 'rsvps/';
 const DAYS = ['Mehendi', 'Haldi', 'Wedding'];
 let access = process.env.BLOB_ACCESS || 'private';
 
-// The Blob key is BLOB_READ_WRITE_TOKEN by default, but Vercel lets you rename it when connecting
-// (e.g. MYSTORE_READ_WRITE_TOKEN), so accept any variable that holds a Blob read-write key.
+// Credentials. New Blob stores connect with BLOB_STORE_ID and Vercel's per-request OIDC token (no secret to copy).
+// Older stores use a read-write key: BLOB_READ_WRITE_TOKEN, or a renamed *_READ_WRITE_TOKEN.
 const TOKEN = process.env.BLOB_READ_WRITE_TOKEN ||
-  Object.entries(process.env).find(([k, v]) => /READ_WRITE_TOKEN$/.test(k) && /^vercel_blob_rw_/.test(v || ''))?.[1]; // falls back to 'public' if the store was created as public
+  Object.entries(process.env).find(([k, v]) => /READ_WRITE_TOKEN$/.test(k) && /^vercel_blob_rw_/.test(v || ''))?.[1];
+const STORE_ID = process.env.BLOB_STORE_ID;
+let auth = {}; // set per request in the handler
+
+function credentials(req) {
+  if (TOKEN) return { token: TOKEN };
+  const oidcToken = req.headers['x-vercel-oidc-token'] || process.env.VERCEL_OIDC_TOKEN;
+  return oidcToken ? { oidcToken, storeId: STORE_ID } : {}; // {} lets the library find the token itself
+} // falls back to 'public' if the store was created as public
 
 function isAdmin(req) {
   const want = process.env.ADMIN_PASSWORD || '';
@@ -24,7 +32,7 @@ const clip = (v, n) => String(v ?? '').trim().slice(0, n);
 const accessProblem = e => /access|private|public/i.test(String(e && e.message));
 
 async function save(path, body) {
-  const opts = () => ({ token: TOKEN, access, addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json', cacheControlMaxAge: 60 });
+  const opts = () => ({ ...auth, access, addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json', cacheControlMaxAge: 60 });
   try { await put(path, body, opts()) }
   catch (e) { if (!accessProblem(e)) throw e; access = access === 'private' ? 'public' : 'private'; await put(path, body, opts()) }
 }
@@ -32,12 +40,12 @@ async function save(path, body) {
 async function readAll() {
   const blobs = [];
   let cursor;
-  do { const r = await list({ token: TOKEN, prefix: PREFIX, cursor, limit: 1000 }); blobs.push(...r.blobs); cursor = r.hasMore ? r.cursor : null } while (cursor);
+  do { const r = await list({ ...auth, prefix: PREFIX, cursor, limit: 1000 }); blobs.push(...r.blobs); cursor = r.hasMore ? r.cursor : null } while (cursor);
   const rows = await Promise.all(blobs.map(async b => {
     try {
       let r;
-      try { r = await get(b.pathname, { token: TOKEN, access, useCache: false }) }
-      catch (e) { if (!accessProblem(e)) throw e; access = access === 'private' ? 'public' : 'private'; r = await get(b.pathname, { token: TOKEN, access, useCache: false }) }
+      try { r = await get(b.pathname, { ...auth, access, useCache: false }) }
+      catch (e) { if (!accessProblem(e)) throw e; access = access === 'private' ? 'public' : 'private'; r = await get(b.pathname, { ...auth, access, useCache: false }) }
       return r && r.stream ? JSON.parse(await new Response(r.stream).text()) : null;
     } catch (e) { return null }
   }));
@@ -46,7 +54,8 @@ async function readAll() {
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
-  if (!TOKEN) return res.status(503).json({ error: 'Storage is not connected yet. Connect a Blob store to this project and redeploy.' });
+  auth = credentials(req);
+  if (!TOKEN && !STORE_ID) return res.status(503).json({ error: 'Storage is not connected yet. Connect a Blob store to this project and redeploy.' });
 
   try {
     if (req.method === 'POST') {
@@ -72,8 +81,8 @@ module.exports = async (req, res) => {
     if (req.method === 'DELETE') {
       const id = clip(req.query.id, 40).replace(/[^\w-]/g, '');
       if (!id) return res.status(400).json({ error: 'Missing id.' });
-      const { blobs } = await list({ token: TOKEN, prefix: PREFIX + id + '.json' });
-      if (blobs.length) await del(blobs.map(b => b.url), { token: TOKEN });
+      const { blobs } = await list({ ...auth, prefix: PREFIX + id + '.json' });
+      if (blobs.length) await del(blobs.map(b => b.url), { ...auth });
       return res.status(200).json({ ok: true });
     }
 

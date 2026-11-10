@@ -52,7 +52,6 @@ module.exports = async (req, res) => {
       const attending = b.attending === true || b.attending === 'Yes';
       const row = {
         id, name, attending,
-        guests: attending ? Math.min(15, Math.max(1, parseInt(b.guests, 10) || 1)) : 0,
         days: attending ? (Array.isArray(b.days) ? b.days : []).filter(d => DAYS.includes(d)) : [],
         message: clip(b.message, 1000),
         at: new Date().toISOString()

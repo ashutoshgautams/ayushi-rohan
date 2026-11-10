@@ -364,8 +364,6 @@ footer p.script{font-style:normal;color:var(--ivory)}
           <button class="opt" id="no" aria-pressed="false">With love,<small>I can’t make it</small></button>
         </div>
         <div class="fld"><label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="e.g. Sharma family"></div>
-        <div class="step" id="gst" hidden><span>Number of guests<small>including you</small></span>
-          <div><button id="mi" aria-label="Fewer">−</button><output id="gn">1</output><button id="pl" aria-label="More">+</button></div></div>
         <div class="days" id="dst" hidden><span>Which days will you join?</span><div id="days"></div></div>
         <div class="fld"><label for="nt">A message for the couple</label><textarea id="nt" placeholder="Optional"></textarea></div>
         <button class="btn b-go" id="send">Send my reply</button>
@@ -433,33 +431,32 @@ $('gc').innerHTML=`<a class="all" target="_blank" rel="noopener" href="${gcal('A
   EV.map(e=>`<a target="_blank" rel="noopener" href="${gcal('Ayushi & Rohan’s '+e.n,e.d,e.d,(e.t?e.t+'\n':'')+'Join us for the '+e.n+'.',e.v)}">${e.n}<small>${+e.d.slice(8)} Jan</small></a>`).join('');
 
 /* rsvp: saved to /api/rsvp, viewed at /admin. One id per device, so a changed reply updates the same row. */
-let att=null,g=1,days=EV.map(e=>e.n);
+let att=null,days=EV.map(e=>e.n);
 $('days').innerHTML=EV.map(e=>`<button aria-pressed="true" data-n="${e.n}">${e.n}<small>${+e.d.slice(8)} Jan</small></button>`).join('');
 const dayBtns=[...$('days').children];
 function showDays(){dayBtns.forEach(b=>b.setAttribute('aria-pressed',days.includes(b.dataset.n)))}
 dayBtns.forEach(b=>b.onclick=()=>{const n=b.dataset.n;days=days.includes(n)?days.filter(x=>x!=n):EV.map(e=>e.n).filter(x=>x==n||days.includes(x));showDays();$('msg').textContent=''});
-function pick(y){att=y;$('yes').setAttribute('aria-pressed',y);$('no').setAttribute('aria-pressed',!y);$('gst').hidden=$('dst').hidden=!y;$('msg').textContent=''}
+function pick(y){att=y;$('yes').setAttribute('aria-pressed',y);$('no').setAttribute('aria-pressed',!y);$('dst').hidden=!y;$('msg').textContent=''}
 $('yes').onclick=()=>pick(true);$('no').onclick=()=>pick(false);
-$('mi').onclick=()=>{g=Math.max(1,g-1);$('gn').textContent=g};$('pl').onclick=()=>{g=Math.min(15,g+1);$('gn').textContent=g};
 const list=a=>a.length==EV.length?'all 3 days':a.length>1?a.slice(0,-1).join(', ')+' & '+a.at(-1):a[0];
 function summary(){const n=$('nm').value.trim();
-  return att?`We can’t wait to see you, ${n}! ${g==1?'Just you':g+' of you'}, for ${list(days)}.`
+  return att?`We can’t wait to see you, ${n}! See you for ${list(days)}.`
             :`We’ll miss you, ${n}. Thank you for your love and blessings.`}
 function ok(){if(att===null){$('msg').textContent='Please choose whether you can come.';return false}
   if(!$('nm').value.trim()){$('msg').textContent='Please add your name.';$('nm').focus();return false}
   if(att&&!days.length){$('msg').textContent='Please pick at least one day.';return false}return true}
-function done(){try{localStorage.setItem('rsvp',JSON.stringify({att,g,days,n:$('nm').value,t:$('nt').value}))}catch(e){}
+function done(){try{localStorage.setItem('rsvp',JSON.stringify({att,days,n:$('nm').value,t:$('nt').value}))}catch(e){}
   $('pv').textContent=summary();$('form').classList.add('done')}
 function rid(){try{let i=localStorage.getItem('rsvp-id');if(!i){i=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));localStorage.setItem('rsvp-id',i)}return i}catch(e){return Date.now().toString(36)+Math.random().toString(36).slice(2)}}
 $('send').onclick=async()=>{if(!ok())return;
   const b=$('send');b.disabled=true;b.textContent='Sending…';$('msg').textContent='';
   try{const r=await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({id:rid(),name:$('nm').value.trim(),attending:att,guests:g,days,message:$('nt').value.trim()})});
+      body:JSON.stringify({id:rid(),name:$('nm').value.trim(),attending:att,days,message:$('nt').value.trim()})});
     if(!r.ok)throw 0;done()}
   catch(e){$('msg').textContent='Sorry, that didn’t go through. Please try again in a moment.'}
   b.disabled=false;b.textContent='Send my reply'};
 $('edit').onclick=()=>$('form').classList.remove('done');
-try{const r=JSON.parse(localStorage.getItem('rsvp')||'null');if(r){$('nm').value=r.n;$('nt').value=r.t;g=r.g||1;$('gn').textContent=g;if(r.days)days=r.days;showDays();pick(r.att);done()}}catch(e){}
+try{const r=JSON.parse(localStorage.getItem('rsvp')||'null');if(r){$('nm').value=r.n;$('nt').value=r.t;if(r.days)days=r.days;showDays();pick(r.att);done()}}catch(e){}
 
 /* floating RSVP */
 let past=false,atR=false;

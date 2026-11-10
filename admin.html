@@ -32,7 +32,7 @@ input:focus{border-color:var(--sky)}
 .btn.ghost{background:transparent;color:var(--ivory);border:1.5px solid #FBF1DC55;padding:9px 16px;font-size:16px}
 .err{color:var(--coral);font-style:italic;font-size:16px}.err:empty{display:none}
 /* dashboard */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
 .stat{background:var(--cream);border-radius:16px;padding:14px 12px;text-align:center}
 .stat b{display:block;font-size:40px;line-height:1;font-weight:600;color:var(--coral)}
 .stat span{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
@@ -60,7 +60,7 @@ input:focus{border-color:var(--sky)}
 .foot{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap}
 [hidden]{display:none!important}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-@media (max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.stat b{font-size:34px}.day b{font-size:26px}}
+@media (max-width:560px){.stat b{font-size:34px}.day b{font-size:26px}}
 </style>
 </head>
 <body>
@@ -80,8 +80,7 @@ input:focus{border-color:var(--sky)}
 
   <main id="dash" hidden>
     <div class="stats">
-      <div class="stat main"><b id="s-g">0</b><span>Guests coming</span></div>
-      <div class="stat"><b id="s-y">0</b><span>Said yes</span></div>
+      <div class="stat main"><b id="s-y">0</b><span>Coming</span></div>
       <div class="stat"><b id="s-n">0</b><span>Can’t come</span></div>
       <div class="stat"><b id="s-r">0</b><span>Replies</span></div>
     </div>
@@ -127,15 +126,14 @@ function logout(msg){pw='';try{sessionStorage.removeItem('apw')}catch(e){}$('das
 
 function render(){
   const yes=rows.filter(r=>r.attending), no=rows.filter(r=>!r.attending);
-  $('s-g').textContent=yes.reduce((a,r)=>a+r.guests,0);
   $('s-y').textContent=yes.length;$('s-n').textContent=no.length;$('s-r').textContent=rows.length;
-  $('days').innerHTML=DAYS.map(d=>{const g=yes.filter(r=>r.days.includes(d)).reduce((a,r)=>a+r.guests,0);return `<div class="day"><b>${g}</b><span>${d}</span></div>`}).join('');
+  $('days').innerHTML=DAYS.map(d=>{const g=yes.filter(r=>r.days.includes(d)).length;return `<div class="day"><b>${g}</b><span>${d}</span></div>`}).join('');
   const q=$('q').value.trim().toLowerCase();
   const list=rows.filter(r=>(filter=='all'||(filter=='y'&&r.attending)||(filter=='n'&&!r.attending)||(filter=='m'&&r.message))&&(!q||(r.name+' '+r.message).toLowerCase().includes(q)));
   $('list').innerHTML=list.length?list.map(r=>`<article class="row">
     <h3>${esc(r.name)}<span class="pill ${r.attending?'y':'n'}">${r.attending?'Coming':'Can’t come'}</span></h3>
     <div class="when">${when(r.at)}<br><button class="del" data-id="${esc(r.id)}">Delete</button></div>
-    ${r.attending?`<div class="meta">${r.guests} ${r.guests==1?'guest':'guests'} · ${r.days.length==3?'All 3 days':esc(r.days.join(', '))}</div>`:''}
+    ${r.attending?`<div class="meta">${r.days.length==3?'All 3 days':esc(r.days.join(', '))}</div>`:''}
     ${r.message?`<div class="msg">${esc(r.message)}</div>`:''}
   </article>`).join(''):`<p class="empty">${rows.length?'No replies match.':'No replies yet.'}</p>`;
 }
@@ -150,7 +148,7 @@ $('list').onclick=async e=>{const b=e.target.closest('.del');if(!b)return;const 
   const res=await fetch('/api/rsvp?id='+encodeURIComponent(b.dataset.id),{method:'DELETE',headers:{'x-admin-password':pw}});
   if(res.ok){rows=rows.filter(x=>x.id!=b.dataset.id);render()}else $('derr').textContent='Couldn’t delete. Try again.'};
 $('csv').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-  const lines=[['Name','Coming','Guests','Mehendi','Haldi','Wedding','Message','Replied at'].map(q).join(',')].concat(rows.map(r=>[r.name,r.attending?'Yes':'No',r.guests,...DAYS.map(d=>r.days.includes(d)?'Yes':''),r.message,r.at].map(q).join(',')));
+  const lines=[['Name','Coming','Mehendi','Haldi','Wedding','Message','Replied at'].map(q).join(',')].concat(rows.map(r=>[r.name,r.attending?'Yes':'No',...DAYS.map(d=>r.days.includes(d)?'Yes':''),r.message,r.at].map(q).join(',')));
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv'}));a.download='ayushi-rohan-rsvps.csv';a.click()};
 
 if(pw)load();else{$('login').hidden=false;$('pw').focus()}

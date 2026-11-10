@@ -1,37 +1,47 @@
-// RSVP storage. POST saves a guest's reply; GET/DELETE are for /admin and need ADMIN_PASSWORD.
-// Storage: Upstash Redis (Vercel → Storage → Upstash Redis → Connect to project). No npm packages needed.
+// RSVP storage on Vercel Blob (free on the Hobby plan).
+// POST saves a guest's reply; GET/DELETE are for /admin and need ADMIN_PASSWORD.
+// Each guest is one small file: rsvps/<id>.json. Same guest again = same file, so replies update instead of duplicating.
 const crypto = require('crypto');
+const { put, list, get, del } = require('@vercel/blob');
 
-const URL_ = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-const KEY = 'rsvps';
-
-async function redis(cmd) {
-  const r = await fetch(URL_, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(cmd)
-  });
-  const j = await r.json();
-  if (j.error) throw new Error(j.error);
-  return j.result;
-}
+const PREFIX = 'rsvps/';
+const DAYS = ['Mehendi', 'Haldi', 'Wedding'];
+let access = process.env.BLOB_ACCESS || 'private'; // falls back to 'public' if the store was created as public
 
 function isAdmin(req) {
   const want = process.env.ADMIN_PASSWORD || '';
-  const got = String(req.headers['x-admin-password'] || '');
   if (!want) return false;
-  const a = crypto.createHash('sha256').update(got).digest();
-  const b = crypto.createHash('sha256').update(want).digest();
-  return crypto.timingSafeEqual(a, b);
+  const h = s => crypto.createHash('sha256').update(String(s)).digest();
+  return crypto.timingSafeEqual(h(req.headers['x-admin-password'] || ''), h(want));
 }
 
 const clip = (v, n) => String(v ?? '').trim().slice(0, n);
-const DAYS = ['Mehendi', 'Haldi', 'Wedding'];
+const accessProblem = e => /access|private|public/i.test(String(e && e.message));
+
+async function save(path, body) {
+  const opts = () => ({ access, addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json', cacheControlMaxAge: 60 });
+  try { await put(path, body, opts()) }
+  catch (e) { if (!accessProblem(e)) throw e; access = access === 'private' ? 'public' : 'private'; await put(path, body, opts()) }
+}
+
+async function readAll() {
+  const blobs = [];
+  let cursor;
+  do { const r = await list({ prefix: PREFIX, cursor, limit: 1000 }); blobs.push(...r.blobs); cursor = r.hasMore ? r.cursor : null } while (cursor);
+  const rows = await Promise.all(blobs.map(async b => {
+    try {
+      let r;
+      try { r = await get(b.pathname, { access, useCache: false }) }
+      catch (e) { if (!accessProblem(e)) throw e; access = access === 'private' ? 'public' : 'private'; r = await get(b.pathname, { access, useCache: false }) }
+      return r && r.stream ? JSON.parse(await new Response(r.stream).text()) : null;
+    } catch (e) { return null }
+  }));
+  return rows.filter(Boolean).sort((a, b) => b.at.localeCompare(a.at));
+}
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
-  if (!URL_ || !TOKEN) return res.status(503).json({ error: 'Storage is not connected yet.' });
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return res.status(503).json({ error: 'Storage is not connected yet.' });
 
   try {
     if (req.method === 'POST') {
@@ -47,30 +57,26 @@ module.exports = async (req, res) => {
         message: clip(b.message, 1000),
         at: new Date().toISOString()
       };
-      await redis(['HSET', KEY, id, JSON.stringify(row)]); // same guest again = their reply is updated, not duplicated
+      await save(PREFIX + id + '.json', JSON.stringify(row));
       return res.status(200).json({ ok: true });
     }
 
     if (!isAdmin(req)) return res.status(401).json({ error: 'Wrong password.' });
 
-    if (req.method === 'GET') {
-      const flat = (await redis(['HGETALL', KEY])) || [];
-      const rows = [];
-      for (let i = 1; i < flat.length; i += 2) { try { rows.push(JSON.parse(flat[i])) } catch (e) {} }
-      rows.sort((a, b) => b.at.localeCompare(a.at));
-      return res.status(200).json({ rows });
-    }
+    if (req.method === 'GET') return res.status(200).json({ rows: await readAll() });
 
     if (req.method === 'DELETE') {
-      const id = clip(req.query.id, 40);
+      const id = clip(req.query.id, 40).replace(/[^\w-]/g, '');
       if (!id) return res.status(400).json({ error: 'Missing id.' });
-      await redis(['HDEL', KEY, id]);
+      const { blobs } = await list({ prefix: PREFIX + id + '.json' });
+      if (blobs.length) await del(blobs.map(b => b.url));
       return res.status(200).json({ ok: true });
     }
 
     res.setHeader('Allow', 'GET, POST, DELETE');
     return res.status(405).json({ error: 'Method not allowed.' });
   } catch (e) {
+    console.error(e);
     return res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 };

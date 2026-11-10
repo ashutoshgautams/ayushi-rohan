@@ -6,12 +6,12 @@ Static site, no build step. Deploy this folder on Vercel (drag and drop it, or `
 The WhatsApp preview needs the full web address of the site.
 In `index.html`, replace every `https://ayushi-rohan.vercel.app` with your real Vercel URL (or your custom domain).
 
-## RSVPs and the /admin tracker (one-time setup, about 3 minutes)
-Guest replies are saved by a small Vercel function (`api/rsvp.js`) into a free Upstash Redis database.
-You read them at **`https://your-url/admin`** with a password.
+## RSVPs and the /admin tracker (free, one-time setup, about 2 minutes)
+Guest replies are saved by a small Vercel function (`api/rsvp.js`) into **Vercel Blob**, Vercel's own storage.
+It's free on the Hobby plan (no extra account, no card). You read replies at **`https://your-url/admin`** with a password.
 
-1. In the Vercel dashboard, open this project → **Storage** → **Create Database** → **Upstash Redis** (free plan) → connect it to this project.
-   This adds the database keys to the project automatically.
+1. In the Vercel dashboard, open this project → **Storage** → **Create** → **Blob**. Pick **Private** if it asks, then connect it to this project.
+   This adds `BLOB_READ_WRITE_TOKEN` to the project automatically.
 2. Project → **Settings → Environment Variables** → add `ADMIN_PASSWORD` with a password of your choice.
 3. **Redeploy** (Deployments → ⋯ → Redeploy) so the function picks up both.
 

@@ -1,0 +1,7 @@
+{
+  "name": "ayushi-rohan",
+  "private": true,
+  "dependencies": {
+    "@vercel/blob": "^2.9.0"
+  }
+}

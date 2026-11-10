@@ -6,17 +6,33 @@ Static site, no build step. Deploy this folder on Vercel (drag and drop it, or `
 The WhatsApp preview needs the full web address of the site.
 In `index.html`, replace every `https://ayushi-rohan.vercel.app` with your real Vercel URL (or your custom domain).
 
+## RSVPs and the /admin tracker (one-time setup, about 3 minutes)
+Guest replies are saved by a small Vercel function (`api/rsvp.js`) into a free Upstash Redis database.
+You read them at **`https://your-url/admin`** with a password.
+
+1. In the Vercel dashboard, open this project → **Storage** → **Create Database** → **Upstash Redis** (free plan) → connect it to this project.
+   This adds the database keys to the project automatically.
+2. Project → **Settings → Environment Variables** → add `ADMIN_PASSWORD` with a password of your choice.
+3. **Redeploy** (Deployments → ⋯ → Redeploy) so the function picks up both.
+
+The admin page shows: total guests, yes / can't come, headcount for each day, every reply with its message,
+search, a filter, **Download CSV** (opens in Excel or Google Sheets), and Delete for test entries.
+If a guest changes their reply on the same phone, their row is updated, not duplicated.
+
+## Google Calendar
+The festivities section has one "Add to Google Calendar" box: **All 3 days** (27–29 Jan) or any single day.
+Direct link to it to share on its own: `https://your-url/#calendar`.
+
 ## Optional
-- In the `<script>` near the bottom of `index.html`, set `CFG.wa` to the couple's WhatsApp number
-  (country code + digits, e.g. `919812345678`). RSVPs then go straight to that chat.
-- Add the time (`t`) and venue (`v`) for each event in `EV` when they're ready.
+- Add the time (`t`) and venue (`v`) for each event in `EV`. They show on the cards and go into the calendar entries.
   Until then, each card says "Time & venue to follow".
 
 ## Privacy
+/admin is also `noindex`, and replies can only be read with the password.
 The site tells search engines not to list it (`noindex`), so only people who have the link can find it.
 
 ## Checking the WhatsApp preview
 After deploying, paste the URL into https://www.opengraph.xyz to see the preview.
 WhatsApp caches previews for each URL. If you change the image after someone has already shared the link,
-share it as `https://your-url/?v=2` so WhatsApp fetches the new image.
+share it as `https://your-url/?v=3` so WhatsApp fetches the new image.
 # ayushi-rohan

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RSVPs · Ayushi &amp; Rohan</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0D0E44">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:"Great Vibes";src:url(/assets/fonts/great-vibes.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Cormorant";src:url(/assets/fonts/cormorant-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Cormorant";src:url(/assets/fonts/cormorant-600-normal.woff2) format("woff2");font-weight:600 700;font-display:swap}
+@font-face{font-family:"Cormorant";src:url(/assets/fonts/cormorant-500-italic.woff2) format("woff2");font-weight:500 700;font-style:italic;font-display:swap}
+:root{--ink:#0D0E44;--ink-m:#163160;--ink-t:#22627E;--gold:#E3B84E;--gold-l:#F4D88A;--ivory:#FBF1DC;--cream:#FFF8EA;--brown:#6E3014;--coral:#C4392A;--sky:#689F9C;--line:#6E301422}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Cormorant",Georgia,serif;font-weight:500;font-size:18px;line-height:1.45;color:var(--brown);background:linear-gradient(100deg,var(--ink),var(--ink-m) 60%,var(--ink-t)) fixed;min-height:100vh;font-variant-numeric:lining-nums;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+.wrap{max-width:860px;margin:0 auto;padding:36px 16px 60px}
+header{text-align:center;color:var(--ivory);margin-bottom:24px}
+header svg{width:72px;height:auto;aspect-ratio:300/340;margin:0 auto 8px;display:block}
+header h1{font-family:"Great Vibes",cursive;font-weight:400;font-size:46px;line-height:1.1}
+header p{font-style:italic;opacity:.8}
+.card{background:var(--cream);border-radius:18px;padding:20px;box-shadow:0 24px 50px -24px #000a}
+/* login */
+#login{max-width:380px;margin:0 auto;display:grid;gap:12px;text-align:center}
+#login label{font-weight:600;font-size:13px;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+input{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid #6E301433;background:#fff;outline:none;font-size:18px}
+input:focus{border-color:var(--sky)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--coral);color:#fff;font-weight:600;font-size:17px;letter-spacing:.04em;padding:12px 22px;border-radius:999px}
+.btn.ghost{background:transparent;color:var(--ivory);border:1.5px solid #FBF1DC55;padding:9px 16px;font-size:16px}
+.err{color:var(--coral);font-style:italic;font-size:16px}.err:empty{display:none}
+/* dashboard */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.stat{background:var(--cream);border-radius:16px;padding:14px 12px;text-align:center}
+.stat b{display:block;font-size:40px;line-height:1;font-weight:600;color:var(--coral)}
+.stat span{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.stat.main b{color:var(--brown)}
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.day{border-radius:16px;padding:12px;text-align:center;color:var(--ivory);border:1.5px solid #E3B84E66}
+.day b{display:block;font-size:30px;line-height:1;font-weight:600;color:var(--gold-l)}
+.day span{font-size:15px;font-style:italic;opacity:.9}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.bar input{flex:1;min-width:180px;padding:10px 14px;font-size:17px;background:#fff8ea}
+.seg{display:flex;border:1.5px solid #FBF1DC55;border-radius:999px;overflow:hidden}
+.seg button{color:var(--ivory);padding:8px 14px;font-size:16px}
+.seg button[aria-pressed=true]{background:var(--ivory);color:var(--brown)}
+.list{display:grid;gap:10px}
+.row{background:var(--cream);border-radius:16px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start}
+.row h3{font-weight:600;font-size:21px;line-height:1.2}
+.pill{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-left:6px;vertical-align:3px}
+.pill.y{background:#689F9C;color:#fff}.pill.n{background:#6E30141a;color:var(--brown)}
+.meta{grid-column:1/-1;font-size:16px;opacity:.85}
+.msg{grid-column:1/-1;font-style:italic;font-size:17px;background:#fff;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 10px 10px 0;margin-top:4px;white-space:pre-wrap}
+.when{font-size:14px;opacity:.6;white-space:nowrap;text-align:right}
+.del{font-size:14px;text-decoration:underline;text-underline-offset:3px;opacity:.55;margin-top:2px}
+.del:hover{opacity:1;color:var(--coral)}
+.empty{text-align:center;color:var(--ivory);font-style:italic;opacity:.8;padding:30px 0}
+.foot{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.stat b{font-size:34px}.day b{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg viewBox="0 0 300 340" aria-hidden="true"><use href="/#mono"/></svg>
+    <h1><span style="font-family:Cormorant;font-style:italic;font-size:.86em">A</span>yushi &amp; Rohan</h1>
+    <p>RSVP tracker</p>
+  </header>
+
+  <form id="login" class="card" hidden>
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <button class="btn" type="submit">Open</button>
+    <p class="err" id="lerr" aria-live="polite"></p>
+  </form>
+
+  <main id="dash" hidden>
+    <div class="stats">
+      <div class="stat main"><b id="s-g">0</b><span>Guests coming</span></div>
+      <div class="stat"><b id="s-y">0</b><span>Said yes</span></div>
+      <div class="stat"><b id="s-n">0</b><span>Can’t come</span></div>
+      <div class="stat"><b id="s-r">0</b><span>Replies</span></div>
+    </div>
+    <div class="days" id="days"></div>
+    <div class="bar">
+      <input id="q" type="search" placeholder="Search names or messages" aria-label="Search">
+      <div class="seg" role="group" aria-label="Filter">
+        <button data-f="all" aria-pressed="true">All</button><button data-f="y" aria-pressed="false">Yes</button><button data-f="n" aria-pressed="false">No</button><button data-f="m" aria-pressed="false">Messages</button>
+      </div>
+    </div>
+    <p class="err" id="derr" aria-live="polite" style="color:var(--gold-l);text-align:center;margin-bottom:10px"></p>
+    <div class="list" id="list"></div>
+    <div class="foot">
+      <button class="btn ghost" id="refresh">Refresh</button>
+      <button class="btn ghost" id="csv">Download CSV</button>
+      <button class="btn ghost" id="out">Log out</button>
+    </div>
+  </main>
+</div>
+
+<!-- monogram from the invite (same symbol) -->
+<script>
+const $=id=>document.getElementById(id), DAYS=['Mehendi','Haldi','Wedding'];
+let pw='', rows=[], filter='all';
+try{pw=sessionStorage.getItem('apw')||''}catch(e){}
+
+// reuse the monogram drawn in the invite
+fetch('/').then(r=>r.text()).then(t=>{const m=t.match(/<symbol id="mono"[\s\S]*?<\/symbol>/);if(m){document.body.insertAdjacentHTML('afterbegin','<svg width="0" height="0" style="position:absolute" aria-hidden="true">'+m[0]+'</svg>');document.querySelector('header use').setAttribute('href','#mono')}}).catch(()=>{});
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const when=iso=>{const d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+', '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})};
+
+async function load(){
+  $('derr').textContent='';
+  const r=await fetch('/api/rsvp',{headers:{'x-admin-password':pw}});
+  if(r.status==401){logout('Wrong password.');return}
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){showDash();$('derr').textContent=j.error||'Couldn’t load replies.';return}
+  rows=j.rows||[];showDash();render();
+}
+function showDash(){$('login').hidden=true;$('dash').hidden=false}
+function logout(msg){pw='';try{sessionStorage.removeItem('apw')}catch(e){}$('dash').hidden=true;$('login').hidden=false;$('lerr').textContent=msg||'';$('pw').value='';$('pw').focus()}
+
+function render(){
+  const yes=rows.filter(r=>r.attending), no=rows.filter(r=>!r.attending);
+  $('s-g').textContent=yes.reduce((a,r)=>a+r.guests,0);
+  $('s-y').textContent=yes.length;$('s-n').textContent=no.length;$('s-r').textContent=rows.length;
+  $('days').innerHTML=DAYS.map(d=>{const g=yes.filter(r=>r.days.includes(d)).reduce((a,r)=>a+r.guests,0);return `<div class="day"><b>${g}</b><span>${d}</span></div>`}).join('');
+  const q=$('q').value.trim().toLowerCase();
+  const list=rows.filter(r=>(filter=='all'||(filter=='y'&&r.attending)||(filter=='n'&&!r.attending)||(filter=='m'&&r.message))&&(!q||(r.name+' '+r.message).toLowerCase().includes(q)));
+  $('list').innerHTML=list.length?list.map(r=>`<article class="row">
+    <h3>${esc(r.name)}<span class="pill ${r.attending?'y':'n'}">${r.attending?'Coming':'Can’t come'}</span></h3>
+    <div class="when">${when(r.at)}<br><button class="del" data-id="${esc(r.id)}">Delete</button></div>
+    ${r.attending?`<div class="meta">${r.guests} ${r.guests==1?'guest':'guests'} · ${r.days.length==3?'All 3 days':esc(r.days.join(', '))}</div>`:''}
+    ${r.message?`<div class="msg">${esc(r.message)}</div>`:''}
+  </article>`).join(''):`<p class="empty">${rows.length?'No replies match.':'No replies yet.'}</p>`;
+}
+
+$('login').onsubmit=e=>{e.preventDefault();pw=$('pw').value;try{sessionStorage.setItem('apw',pw)}catch(_){}$('lerr').textContent='';load()};
+$('q').oninput=render;
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x==b));render()});
+$('refresh').onclick=load;
+$('out').onclick=()=>logout();
+$('list').onclick=async e=>{const b=e.target.closest('.del');if(!b)return;const r=rows.find(x=>x.id==b.dataset.id);
+  if(!confirm(`Delete the reply from ${r?r.name:'this guest'}?`))return;
+  const res=await fetch('/api/rsvp?id='+encodeURIComponent(b.dataset.id),{method:'DELETE',headers:{'x-admin-password':pw}});
+  if(res.ok){rows=rows.filter(x=>x.id!=b.dataset.id);render()}else $('derr').textContent='Couldn’t delete. Try again.'};
+$('csv').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const lines=[['Name','Coming','Guests','Mehendi','Haldi','Wedding','Message','Replied at'].map(q).join(',')].concat(rows.map(r=>[r.name,r.attending?'Yes':'No',r.guests,...DAYS.map(d=>r.days.includes(d)?'Yes':''),r.message,r.at].map(q).join(',')));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv'}));a.download='ayushi-rohan-rsvps.csv';a.click()};
+
+if(pw)load();else{$('login').hidden=false;$('pw').focus()}
+</script>
+</body>
+</html>

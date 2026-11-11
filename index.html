@@ -171,6 +171,20 @@ section{position:relative;overflow:hidden;isolation:isolate}
 .ev h3{font-family:var(--script);font-weight:400;font-size:46px;line-height:1.05}
 .ev p{font-size:18px}
 .ev .tbc{font-style:italic;opacity:.8;font-size:17px}
+.ev .where{display:flex;align-items:center;gap:6px;font-weight:600}
+.ev .where svg,.b-map svg{width:16px;height:16px;fill:currentColor;flex:none}
+/* ---------- 5b · venues ---------- */
+#venue{background:var(--sky);color:var(--ivory);padding:80px 0 84px;text-align:center}
+#venue .speck{position:absolute;inset:0;background:url(/assets/speckle.svg) 0 0/360px;opacity:.6;z-index:1}
+#venue .h-script{color:var(--ivory);margin-bottom:24px}
+#venue .label{color:#FFE2A6}
+.vens{display:grid;gap:16px}
+.ven{background:var(--cream-l);color:var(--brown);border-radius:20px;padding:24px 20px 22px;box-shadow:0 22px 40px -22px #0d2e2c99}
+#venue .ven .label{color:var(--coral);font-size:12px}
+.ven h3{font-family:var(--script);font-weight:400;font-size:46px;line-height:1.1;margin:4px 0 2px}
+.ven p{font-size:18px}
+.b-map{margin-top:14px;background:var(--sky);color:#fff;font-size:17px;padding:11px 22px}
+.b-map svg{width:18px;height:18px}
 .ev .deco{z-index:0}.ev>h3,.ev>p{position:relative;z-index:1}.ev>.day{z-index:1}
 .ev.mehendi{background:var(--sky);color:var(--ivory);--petal-cut:var(--sky)}
 .ev.mehendi .day{color:#FFE2A6}
@@ -305,7 +319,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco lsun-p2" viewBox="0 0 120 120"><use href="#lsun"/></svg>
   <div class="in">
     <p class="label rv">Chapter two</p>
-    <h2 class="h-script script rv" id="sh">Two stories, one</h2>
+    <h2 class="h-script script rv" id="sh">Two hearts, one story</h2>
     <p class="mith lyric rv">From the lands of Mithila and Bhojpur, two stories became one.</p>
     <div class="album">
       <figure class="pol pol1 rv"><span class="tape"></span><img src="/assets/couple-1.jpg" width="480" height="332" alt="Ayushi and Rohan by the sea" loading="lazy"></figure>
@@ -350,6 +364,16 @@ footer p.script{font-style:normal;color:var(--ivory)}
   </div>
 </section>
 
+<!-- 5b · Venues -->
+<section id="venue" class="grain" aria-labelledby="vh">
+  <div class="speck"></div>
+  <div class="in">
+    <p class="label rv">Where to find us</p>
+    <h2 class="h-script script rv" id="vh">The venues</h2>
+    <div class="vens" id="vens"></div>
+  </div>
+</section>
+
 <!-- 6 · RSVP -->
 <section id="rsvp" class="grain" aria-labelledby="rh">
   <svg class="deco ch-tr spin" viewBox="0 0 212 212" style="animation-duration:120s"><use href="#chrys"/></svg>
@@ -389,11 +413,16 @@ footer p.script{font-style:normal;color:var(--ivory)}
 
 <script>
 /* Replies are saved via /api/rsvp and shown at /admin (see README). Add t (time) and v (venue) for each event when ready. */
+const VEN={
+  home:{n:'Karn’s',s:'Rajeev Nagar',a:'25D, Rajeev Nagar, Patna',map:'25D Rajeev Nagar, Patna, Bihar'},
+  palace:{n:'Kishan Palace',s:'Saguna More',a:'Saguna More, beside Maharaja and Sundar Vatika, Patna',map:'Kishan Palace, Saguna More, Patna, Bihar'}
+};
 const EV=[
-  {n:'Mehendi',k:'mehendi',d:'2027-01-27',t:'',v:''},
-  {n:'Haldi',k:'haldi',d:'2027-01-28',t:'',v:''},
-  {n:'Wedding',k:'wedding',d:'2027-01-29',t:'',v:''}
+  {n:'Mehendi',k:'mehendi',d:'2027-01-27',t:'',v:'home'},
+  {n:'Haldi',k:'haldi',d:'2027-01-28',t:'',v:'home'},
+  {n:'Wedding',k:'wedding',d:'2027-01-29',t:'',v:'palace'}
 ];
+const mapUrl=v=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(VEN[v].map);
 const CH=[['Beginnings',0],['The couple',16.6],['Our story',21.3],['The date',31.4]];
 const $=id=>document.getElementById(id), RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
@@ -417,19 +446,25 @@ function tick(){const ms=T0-Date.now();if(ms<=0){$('cd').style.display='none';$(
 tick();setInterval(tick,1000);
 
 /* festivities */
+const PIN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
 const DECO={mehendi:'<svg class="deco" viewBox="0 0 340 200"><use href="#petals"/></svg>',
   haldi:'<svg class="deco" viewBox="0 0 260 132"><use href="#sun"/></svg>',
   wedding:'<svg class="deco spin" viewBox="0 0 360 360" style="animation-duration:70s"><use href="#mandala"/></svg>'};
 $('evs').innerHTML=EV.map(e=>{const [y,m,d]=e.d.split('-').map(Number),dt=new Date(y,m-1,d),L=o=>dt.toLocaleDateString('en-GB',o);
   return `<article class="ev ${e.k} rv">${DECO[e.k]}<div class="day"><b>${d}</b><span>${L({month:'short'})}</span></div>
-  <h3>${e.n}</h3><p>${L({weekday:'long'})}, ${d} ${L({month:'long'})} ${y}</p>${e.t?`<p>${e.t}</p>`:''}${e.v?`<p>${e.v}</p>`:''}${!e.t&&!e.v?'<p class="tbc">Time &amp; venue to follow</p>':''}</article>`}).join('');
+  <h3>${e.n}</h3><p>${L({weekday:'long'})}, ${d} ${L({month:'long'})} ${y}</p><p class="where">${PIN}${VEN[e.v].n}, ${VEN[e.v].s}</p>${e.t?`<p>${e.t}</p>`:'<p class="tbc">Time to follow</p>'}</article>`}).join('');
+$('vens').innerHTML=[['palace','The Wedding','29 January'],['home','Mehendi & Haldi','27 & 28 January']].map(([v,what,when])=>
+  `<article class="ven rv"><p class="label">${what} · ${when}</p><h3>${VEN[v].n}</h3><p>${VEN[v].a}</p>
+  <a class="btn b-map" href="${mapUrl(v)}" target="_blank" rel="noopener">${PIN}Open in Google Maps</a></article>`).join('');
+document.querySelectorAll('#vens .rv').forEach(el=>RM?el.classList.add('on'):io.observe(el));
 document.querySelectorAll('#evs .rv').forEach(el=>RM?el.classList.add('on'):io.observe(el));
 const ymd=s=>s.replace(/-/g,''),next=s=>{const d=new Date(s+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)};
 const SITE=location.origin+'/';
 function gcal(title,from,to,details,loc){return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates='+ymd(from)+'/'+ymd(next(to))+'&details='+encodeURIComponent(details+'\n\n'+SITE)+(loc?'&location='+encodeURIComponent(loc):'')}
-const all=EV.map(e=>`${e.n}: ${+e.d.slice(8)} Jan${e.t?', '+e.t:''}${e.v?', '+e.v:''}`).join('\n');
+const vfull=e=>VEN[e.v].n+', '+VEN[e.v].a;
+const all=EV.map(e=>`${e.n}: ${+e.d.slice(8)} Jan${e.t?', '+e.t:''} · ${vfull(e)}\n${mapUrl(e.v)}`).join('\n\n');
 $('gc').innerHTML=`<a class="all" target="_blank" rel="noopener" href="${gcal('Ayushi & Rohan’s Wedding · Mehendi, Haldi & Wedding',EV[0].d,EV[EV.length-1].d,all)}">All 3 days<small>27 – 29 January 2027</small></a>`+
-  EV.map(e=>`<a target="_blank" rel="noopener" href="${gcal('Ayushi & Rohan’s '+e.n,e.d,e.d,(e.t?e.t+'\n':'')+'Join us for the '+e.n+'.',e.v)}">${e.n}<small>${+e.d.slice(8)} Jan</small></a>`).join('');
+  EV.map(e=>`<a target="_blank" rel="noopener" href="${gcal('Ayushi & Rohan’s '+e.n,e.d,e.d,(e.t?e.t+'\n':'')+'Join us for the '+e.n+'.\n\nMap: '+mapUrl(e.v),vfull(e))}">${e.n}<small>${+e.d.slice(8)} Jan</small></a>`).join('');
 
 /* rsvp: saved to /api/rsvp, viewed at /admin. One id per device, so a changed reply updates the same row. */
 let att=null,days=EV.map(e=>e.n);

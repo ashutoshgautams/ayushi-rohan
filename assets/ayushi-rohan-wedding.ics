@@ -10,6 +10,7 @@ DTSTART;VALUE=DATE:20270127
 DTEND;VALUE=DATE:20270128
 SUMMARY:Ayushi & Rohan’s Mehendi
 DESCRIPTION:Join us for the Mehendi.
+LOCATION:Karn’s\, 25D\, Rajeev Nagar\, Patna
 END:VEVENT
 BEGIN:VEVENT
 UID:haldi@ayushi-rohan
@@ -18,6 +19,7 @@ DTSTART;VALUE=DATE:20270128
 DTEND;VALUE=DATE:20270129
 SUMMARY:Ayushi & Rohan’s Haldi
 DESCRIPTION:Join us for the Haldi.
+LOCATION:Karn’s\, 25D\, Rajeev Nagar\, Patna
 END:VEVENT
 BEGIN:VEVENT
 UID:wedding@ayushi-rohan
@@ -26,5 +28,6 @@ DTSTART;VALUE=DATE:20270129
 DTEND;VALUE=DATE:20270130
 SUMMARY:Ayushi & Rohan’s Wedding
 DESCRIPTION:Join us for the Wedding.
+LOCATION:Kishan Palace\, Saguna More (beside Maharaja and Sundar Vatika)\, Patna
 END:VEVENT
 END:VCALENDAR

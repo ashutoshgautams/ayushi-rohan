@@ -33,8 +33,12 @@
 <link rel="preload" href="/assets/fonts/cormorant-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 
 <script>/* /family = the same invite, written from Ayushi's mother's side */
-var FAM=/^\/family\/?$/.test(location.pathname);if(FAM){document.documentElement.classList.add('fam');addEventListener('DOMContentLoaded',function(){var b=document.getElementById('begin');if(b)b.href='#note'});document.title='Jaya Karn invites you · Ayushi & Rohan · 29 January 2027'}</script>
+var FAM=/^\/family\/?$/.test(location.pathname);if(FAM){document.documentElement.classList.add('fam');document.documentElement.lang='hi';addEventListener('DOMContentLoaded',function(){var b=document.getElementById('begin');if(b)b.href='#note'});document.title='शुभ विवाह · आयुषी संग रोहन · 29 जनवरी 2027'}</script>
 <style>
+/* Devanagari only, for the Hindi /family page; unicode-range keeps them off the English invite */
+@font-face{font-family:"Yatra One";src:url(/assets/fonts/yatra-one-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF;font-display:swap}
+@font-face{font-family:"Tiro Devanagari Hindi";src:url(/assets/fonts/tiro-hindi-400-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF;font-display:swap}
+@font-face{font-family:"Tiro Devanagari Hindi";src:url(/assets/fonts/tiro-hindi-400-italic-deva.woff2) format("woff2");font-style:italic;unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF;font-display:swap}
 @font-face{font-family:"Great Vibes";src:url(/assets/fonts/great-vibes.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Parisienne A";src:url(/assets/fonts/parisienne-a.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Cormorant";src:url(/assets/fonts/cormorant-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
@@ -50,8 +54,8 @@ var FAM=/^\/family\/?$/.test(location.pathname);if(FAM){document.documentElement
   --ink:#0D0E44; --ink-m:#163160; --ink-t:#22627E; --gold:#E3B84E; --gold-l:#F4D88A;
   --rose:#8A2F28; --rose-m:#B4574A; --blush:#F0C2B4;
   --brown:#6E3014; --ivory:#FBF1DC;
-  --script:"Great Vibes","Snell Roundhand","Apple Chancery",cursive;
-  --serif:"Cormorant","Iowan Old Style",Palatino,Georgia,serif;
+  --script:"Great Vibes","Yatra One","Snell Roundhand","Apple Chancery",cursive;
+  --serif:"Cormorant","Tiro Devanagari Hindi","Iowan Old Style",Palatino,Georgia,serif;
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -178,6 +182,13 @@ section{position:relative;overflow:hidden;isolation:isolate}
 /* ---------- /family wording ---------- */
 .v-fam{display:none}.fam .v-fam{display:inline}.fam .v-cpl{display:none}
 html:not(.fam) .fam-only{display:none!important}
+/* Hindi: wide tracking breaks Devanagari, and the drop cap would split a conjunct */
+.fam *{letter-spacing:normal!important}
+.fam .ven h3,.fam .ev h3,.fam .h-script,.fam .letter .dear{line-height:1.4}
+.fam .letter .body p:first-child::first-letter{all:unset}
+.fam .names .amp{line-height:1.3;margin:0}
+/* Yatra is a heavy display face, so the names go a size down */.fam .names{font-size:clamp(56px,16vw,96px)}.fam .names .amp{font-size:.42em}
+.fam .script{line-height:1.35}
 /* ---------- 1b · a note from Maa (/family only) ---------- */
 #note{background:radial-gradient(70% 60% at 50% 0%,#FBE3D8,transparent),linear-gradient(180deg,#F6D9CC,var(--cream));padding:78px 0 84px;text-align:center}
 .letter{position:relative;margin:0 auto;max-width:480px;background:var(--cream-l);border-radius:6px;padding:40px 28px 36px;color:var(--brown);
@@ -191,7 +202,7 @@ html:not(.fam) .fam-only{display:none!important}
 .letter .sign p{font-style:italic;font-size:18px;opacity:.85}
 .letter .sign .script{font-size:clamp(42px,11vw,52px);color:var(--coral);margin-top:2px;opacity:1;font-style:normal}
 .letter .sign small{display:block;font-size:15px;letter-spacing:.2em;text-transform:uppercase;opacity:.65;margin-top:4px}
-/* ---------- music: Mangal Rang ---------- */
+/* ---------- music (/family only) ---------- */
 .song-i{position:relative;display:grid;place-items:center}
 .eq{display:none;gap:3px;align-items:flex-end;height:16px}.eq i{width:3px;background:currentColor;border-radius:2px;animation:eq 1s ease-in-out infinite}
 .eq i:nth-child(2){animation-delay:-.35s}.eq i:nth-child(3){animation-delay:-.7s}
@@ -310,11 +321,11 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco p-br" viewBox="0 0 340 200"><g class="sway" style="animation-delay:-4s"><use href="#petals"/></g></svg>
   <div class="in">
     <svg class="crest rv" viewBox="0 0 300 340" role="img" aria-label="A and R monogram"><use href="#mono"/></svg>
-    <p class="opener lyric rv"><span class="v-cpl">Every story has a beginning</span><span class="v-fam">Our daughter is getting married</span></p>
-    <h1 class="names script ink"><span class="cap">A</span>yushi <span class="amp">&amp;</span> Rohan</h1>
-    <p class="tag lyric rv"><span class="v-cpl">together, we are beginning a new chapter</span><span class="v-fam">come, bless them, and make our happiness complete</span></p>
-    <p class="dateline rv"><i></i>29 January 2027<i></i></p>
-    <a class="btn b-ivory scroll rv" id="begin" href="#film"><span class="v-cpl">Begin our story</span><span class="v-fam">Read Maa’s note</span>
+    <p class="opener lyric rv"><span class="v-cpl">Every story has a beginning</span><span class="v-fam">॥ श्री गणेशाय नमः ॥</span></p>
+    <h1 class="names script ink"><span class="v-cpl"><span class="cap">A</span>yushi <span class="amp">&amp;</span> Rohan</span><span class="v-fam">आयुषी <span class="amp">संग</span> रोहन</span></h1>
+    <p class="tag lyric rv"><span class="v-cpl">together, we are beginning a new chapter</span><span class="v-fam">के शुभ विवाह में आप सपरिवार सादर आमंत्रित हैं</span></p>
+    <p class="dateline rv"><i></i><span class="v-cpl">29 January 2027</span><span class="v-fam">29 जनवरी 2027</span><i></i></p>
+    <a class="btn b-ivory scroll rv" id="begin" href="#film"><span class="v-cpl">Begin our story</span><span class="v-fam">निमंत्रण पढ़ें</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
   </div>
 </section>
@@ -324,22 +335,22 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <div class="in">
     <article class="letter rv">
       <svg class="seal" viewBox="0 0 300 340" aria-hidden="true"><use href="#mono"/></svg>
-      <p class="label">From Ayushi’s Maa, with love</p>
-      <h2 class="dear" id="nh">To all our loved ones,</h2>
-      <button class="song" data-music aria-label="Play Mangal Rang">
+      <p class="label">सादर आमंत्रण</p>
+      <h2 class="dear" id="nh">आदरणीय स्वजन,</h2>
+      <button class="song" data-music aria-label="माही वे चलाएँ">
         <span class="song-i"><svg class="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg><span class="eq"><i></i><i></i><i></i></span></span>
-        <span><b>Mangal Rang</b><small class="song-s">Play it while you read</small></span>
+        <span><b>माही वे</b><small class="song-s">पढ़ते हुए सुनिए</small></span>
       </button>
       <div class="body">
-        <p>Some moments feel like yesterday. Ayushi’s first wobbly steps across our home, her tiny hand refusing to let go of my finger, her laughter filling every corner of the house.</p>
-        <p>And now, somehow, my little girl is a bride. She is about to begin a new life with Rohan, and my heart holds two feelings at once: the ache of letting her go, and a happiness I cannot put into words.</p>
-        <p>A daughter’s wedding is the biggest day of a mother’s life, and it will not be complete without you. Come early, fill our home with songs at the Mehendi and Haldi, and stand with us at Kishan Palace as Ayushi and Rohan begin their life together.</p>
-        <p>Your presence is the only gift we ask for. Your blessings are what she will carry with her.</p>
+        <p>परमपिता परमेश्वर की असीम अनुकंपा एवं पूज्य बड़ों के आशीर्वाद से हमारी सुपुत्री <b>आयुष्मती आयुषी</b> का शुभ विवाह <b>चिरंजीव रोहन</b> संग शुक्रवार, 29 जनवरी 2027 को होना निश्चित हुआ है।</p>
+        <p>जिस आँगन में कल तक उसके नन्हे कदमों की आहट गूँजती थी, वहाँ अब शहनाई बजेगी। बिटिया को विदा करने की कसक भी है, और उसे दुल्हन के रूप में देखने की ऐसी ख़ुशी भी, जो शब्दों में नहीं समाती।</p>
+        <p>इस मंगल बेला पर आप सपरिवार पधारें। मेहंदी और हल्दी के गीतों से लेकर फेरों की पावन घड़ी तक, हर रस्म में आपका साथ चाहिए, और वर-वधू को आपका शुभाशीर्वाद।</p>
+        <p>आपकी गरिमामयी उपस्थिति प्रार्थनीय है।</p>
       </div>
       <div class="sign">
-        <p>With folded hands and a full heart,</p>
-        <p class="script">Jaya Karn</p>
-        <small>Ayushi’s Maa</small>
+        <p>विनीत,</p>
+        <p class="script">जया कर्ण</p>
+        <small>एवं समस्त कर्ण परिवार</small>
       </div>
     </article>
   </div>
@@ -352,15 +363,15 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco sun-bl" viewBox="0 0 260 132"><use href="#sun"/></svg>
   <svg class="deco sun-br" viewBox="0 0 260 132"><use href="#sun"/></svg>
   <div class="in">
-    <p class="label rv">Chapter one</p>
-    <h2 class="h-script script rv" id="fh"><span class="v-cpl">You’re invited into our story</span><span class="v-fam">A little film from the children</span></h2>
-    <p class="lead lyric rv"><span class="v-cpl">Turn your sound on. It begins with a song.</span><span class="v-fam">Ayushi and Rohan made this for you. Turn your sound on.</span></p>
+    <p class="label rv"><span class="v-cpl">Chapter one</span><span class="v-fam">पहला अध्याय</span></p>
+    <h2 class="h-script script rv" id="fh"><span class="v-cpl">You’re invited into our story</span><span class="v-fam">वर-वधू की ओर से एक भेंट</span></h2>
+    <p class="lead lyric rv"><span class="v-cpl">Turn your sound on. It begins with a song.</span><span class="v-fam">आयुषी और रोहन ने यह फ़िल्म आपके लिए बनाई है। कृपया आवाज़ चालू करें।</span></p>
     <div class="mat rv">
       <div class="player">
         <video id="v" playsinline webkit-playsinline preload="metadata" poster="/assets/poster.jpg" src="/assets/film.mp4"></video>
         <button class="cover-play" id="play" aria-label="Play the film">
           <span class="pb"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
-          <span>Play the film · 0:42</span>
+          <span><span class="v-cpl">Play the film · 0:42</span><span class="v-fam">फ़िल्म देखें · 0:42</span></span>
         </button>
       </div>
     </div>
@@ -377,13 +388,13 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco lsun-p" viewBox="0 0 120 120"><use href="#lsun"/></svg>
   <svg class="deco lsun-p2" viewBox="0 0 120 120"><use href="#lsun"/></svg>
   <div class="in">
-    <p class="label rv">Chapter two</p>
-    <h2 class="h-script script rv" id="sh">Two hearts, one story</h2>
-    <p class="mith lyric rv"><span class="v-cpl">From the lands of Mithila and Bhojpur, two stories became one.</span><span class="v-fam">A daughter of Mithila, a son of Bhojpur, and now, one family.</span></p>
+    <p class="label rv"><span class="v-cpl">Chapter two</span><span class="v-fam">दूसरा अध्याय</span></p>
+    <h2 class="h-script script rv" id="sh"><span class="v-cpl">Two hearts, one story</span><span class="v-fam">दो दिल, एक कहानी</span></h2>
+    <p class="mith lyric rv"><span class="v-cpl">From the lands of Mithila and Bhojpur, two stories became one.</span><span class="v-fam">मिथिला की बेटी, भोजपुर के बेटे संग। दो परिवार, अब एक।</span></p>
     <div class="album">
       <figure class="pol pol1 rv"><span class="tape"></span><img src="/assets/couple-1.jpg" width="480" height="332" alt="Ayushi and Rohan by the sea" loading="lazy"></figure>
       <figure class="pol pol2 rv"><span class="tape" style="transform:rotate(5deg)"></span><img src="/assets/couple-2.jpg" width="476" height="566" alt="Rohan and Ayushi smiling at each other" loading="lazy"></figure>
-      <p class="note rv"><span class="v-cpl">Two people, and a great deal of ordinary, unremarkable luck.</span><span class="v-fam">We prayed for someone who would love her the way we do. Then came Rohan.</span></p>
+      <p class="note rv"><span class="v-cpl">Two people, and a great deal of ordinary, unremarkable luck.</span><span class="v-fam">जिस जीवनसाथी के लिए हमने बरसों प्रार्थना की, वो रोहन के रूप में मिला।</span></p>
     </div>
   </div>
 </section>
@@ -394,31 +405,31 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco m-l spin" viewBox="0 0 360 360" style="animation-duration:90s"><use href="#mandala"/></svg>
   <svg class="deco m-r spin" viewBox="0 0 360 360" style="animation-duration:90s;animation-direction:reverse"><use href="#mandala"/></svg>
   <div class="in">
-    <p class="lyric rv" id="dh"><span class="v-cpl">So, in ink and marigold, we write</span><span class="v-fam">The day we have waited for</span></p>
+    <p class="lyric rv" id="dh"><span class="v-cpl">So, in ink and marigold, we write</span><span class="v-fam">शुभ मुहूर्त</span></p>
     <div class="bigdate rv">
-      <span class="label">Friday</span>
+      <span class="label"><span class="v-cpl">Friday</span><span class="v-fam">शुक्रवार</span></span>
       <b>29</b>
-      <span class="script">January 2027</span>
+      <span class="script"><span class="v-cpl">January 2027</span><span class="v-fam">जनवरी 2027</span></span>
     </div>
     <div class="count rv" id="cd" aria-hidden="true">
-      <div><b id="cd-d">0</b><span>days</span></div><div><b id="cd-h">0</b><span>hours</span></div>
-      <div><b id="cd-m">0</b><span>mins</span></div><div><b id="cd-s">0</b><span>secs</span></div>
+      <div><b id="cd-d">0</b><span><span class="v-cpl">days</span><span class="v-fam">दिन</span></span></div><div><b id="cd-h">0</b><span><span class="v-cpl">hours</span><span class="v-fam">घंटे</span></span></div>
+      <div><b id="cd-m">0</b><span><span class="v-cpl">mins</span><span class="v-fam">मिनट</span></span></div><div><b id="cd-s">0</b><span><span class="v-cpl">secs</span><span class="v-fam">सेकंड</span></span></div>
     </div>
-    <p class="until rv" id="until"><span class="v-cpl">until we begin our new chapter</span><span class="v-fam">until our little girl becomes a bride</span></p>
+    <p class="until rv" id="until"><span class="v-cpl">until we begin our new chapter</span><span class="v-fam">बस इतना इंतज़ार, फिर गूँजेगी शहनाई</span></p>
   </div>
 </section>
 
 <!-- 5 · Festivities -->
 <section id="fest" class="grain" aria-labelledby="eh">
   <div class="in">
-    <p class="label rv">Chapter three</p>
-    <h2 class="h-script script rv" id="eh"><span class="v-cpl">Wedding festivities</span><span class="v-fam">Three days of joy</span></h2>
+    <p class="label rv"><span class="v-cpl">Chapter three</span><span class="v-fam">तीसरा अध्याय</span></p>
+    <h2 class="h-script script rv" id="eh"><span class="v-cpl">Wedding festivities</span><span class="v-fam">मांगलिक कार्यक्रम</span></h2>
     <svg class="rule rv" viewBox="0 0 264 16" style="color:var(--sun-d);margin:-14px auto 26px"><use href="#rule"/></svg>
     <div class="evs" id="evs"></div>
     <div class="cal rv" id="calendar">
-      <h3>Add to Google Calendar</h3>
+      <h3><span class="v-cpl">Add to Google Calendar</span><span class="v-fam">Google कैलेंडर में जोड़ें</span></h3>
       <div class="gc" id="gc"></div>
-      <a class="ics" href="/assets/ayushi-rohan-wedding.ics">Use Apple or Outlook calendar instead</a>
+      <a class="ics" href="/assets/ayushi-rohan-wedding.ics"><span class="v-cpl">Use Apple or Outlook calendar instead</span><span class="v-fam">Apple या Outlook कैलेंडर में जोड़ें</span></a>
     </div>
   </div>
 </section>
@@ -427,8 +438,8 @@ footer p.script{font-style:normal;color:var(--ivory)}
 <section id="venue" class="grain" aria-labelledby="vh">
   <div class="speck"></div>
   <div class="in">
-    <p class="label rv">Where to find us</p>
-    <h2 class="h-script script rv" id="vh">The venues</h2>
+    <p class="label rv"><span class="v-cpl">Where to find us</span><span class="v-fam">पता</span></p>
+    <h2 class="h-script script rv" id="vh"><span class="v-cpl">The venues</span><span class="v-fam">कार्यक्रम स्थल</span></h2>
     <div class="vens" id="vens"></div>
   </div>
 </section>
@@ -438,25 +449,25 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco ch-tr spin" viewBox="0 0 212 212" style="animation-duration:120s"><use href="#chrys"/></svg>
   <svg class="deco ch-bl" viewBox="0 0 212 212"><use href="#chrys"/></svg>
   <div class="in">
-    <p class="label rv"><span class="v-cpl">The last page is yours</span><span class="v-fam">One small request</span></p>
-    <h2 class="h-script script rv" id="rh"><span class="v-cpl">Will you celebrate with us?</span><span class="v-fam">Will you be there for her?</span></h2>
-    <p class="lyric rv" style="font-size:20px"><span class="v-cpl">Please let us know if you can join us.</span><span class="v-fam">Please tell us if you can come. It helps us plan, and it would make me very happy.</span></p>
+    <p class="label rv"><span class="v-cpl">The last page is yours</span><span class="v-fam">कृपया सूचित करें</span></p>
+    <h2 class="h-script script rv" id="rh"><span class="v-cpl">Will you celebrate with us?</span><span class="v-fam">आपकी प्रतीक्षा रहेगी</span></h2>
+    <p class="lyric rv" style="font-size:20px"><span class="v-cpl">Please let us know if you can join us.</span><span class="v-fam">कृपया बताएँ कि आप पधार सकेंगे या नहीं, ताकि हम आपके स्वागत की उचित व्यवस्था कर सकें।</span></p>
     <div class="form rv" id="form">
       <div class="ask">
         <div class="two" role="group" aria-label="Your reply">
-          <button class="opt" id="yes" aria-pressed="false">Joyfully, yes<small>count me in</small></button>
-          <button class="opt" id="no" aria-pressed="false">With love,<small>I can’t make it</small></button>
+          <button class="opt" id="yes" aria-pressed="false"><span class="v-cpl">Joyfully, yes</span><span class="v-fam">अवश्य आएँगे</span><small><span class="v-cpl">count me in</span><span class="v-fam">सहर्ष</span></small></button>
+          <button class="opt" id="no" aria-pressed="false"><span class="v-cpl">With love,</span><span class="v-fam">क्षमा करें,</span><small><span class="v-cpl">I can’t make it</span><span class="v-fam">इस बार नहीं आ सकेंगे</span></small></button>
         </div>
-        <div class="fld"><label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="e.g. Sharma family"></div>
-        <div class="days" id="dst" hidden><span>Which days will you join?</span><div id="days"></div></div>
-        <div class="fld"><label for="nt">A message for the couple</label><textarea id="nt" placeholder="Optional"></textarea></div>
+        <div class="fld"><label for="nm"><span class="v-cpl">Your name</span><span class="v-fam">आपका शुभ नाम</span></label><input id="nm" autocomplete="name" placeholder="e.g. Sharma family"></div>
+        <div class="days" id="dst" hidden><span><span class="v-cpl">Which days will you join?</span><span class="v-fam">आप किन कार्यक्रमों में पधारेंगे?</span></span><div id="days"></div></div>
+        <div class="fld"><label for="nt"><span class="v-cpl">A message for the couple</span><span class="v-fam">वर-वधू के लिए आशीर्वचन</span></label><textarea id="nt" placeholder="Optional"></textarea></div>
         <button class="btn b-go" id="send">Send my reply</button>
         <p class="msg" id="msg" aria-live="polite"></p>
       </div>
       <div class="thanks" aria-live="polite">
-        <p class="script">Thank you!</p>
+        <p class="script"><span class="v-cpl">Thank you!</span><span class="v-fam">धन्यवाद!</span></p>
         <p class="lyric" id="pv"></p>
-        <div class="alt"><button id="edit">Change my reply</button></div>
+        <div class="alt"><button id="edit"><span class="v-cpl">Change my reply</span><span class="v-fam">उत्तर बदलें</span></button></div>
       </div>
     </div>
   </div>
@@ -464,28 +475,29 @@ footer p.script{font-style:normal;color:var(--ivory)}
 
 <footer>
   <svg viewBox="0 0 300 340" aria-hidden="true"><use href="#mono"/></svg>
-  <p><span class="v-cpl">With love,</span><span class="v-fam">With love and blessings,</span></p>
-  <p class="script"><span class="v-cpl"><span class="cap">A</span>yushi &amp; Rohan</span><span class="v-fam">Jaya Karn &amp; family</span></p>
+  <p><span class="v-cpl">With love,</span><span class="v-fam">स्वागतोत्सुक</span></p>
+  <p class="script"><span class="v-cpl"><span class="cap">A</span>yushi &amp; Rohan</span><span class="v-fam">जया कर्ण एवं परिवार</span></p>
 </footer>
 
-<button class="mus" id="mus" data-music aria-label="Play Mangal Rang">
+<button class="mus fam-only" id="mus" data-music aria-label="माही वे चलाएँ">
   <span class="song-i"><svg class="i-play" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="eq"><i></i><i></i><i></i></span></span>
 </button>
-<a class="btn fab" id="fab" href="#rsvp">RSVP</a>
+<a class="btn fab" id="fab" href="#rsvp"><span class="v-cpl">RSVP</span><span class="v-fam">उत्तर दें</span></a>
 
 <script>
 /* Replies are saved via /api/rsvp and shown at /admin (see README). Add t (time) and v (venue) for each event when ready. */
 const VEN={
-  home:{n:'Karn’s',s:'Rajeev Nagar',a:'25D, Rajeev Nagar, Patna',map:'25D Rajeev Nagar, Patna, Bihar'},
-  palace:{n:'Kishan Palace',s:'Saguna More',a:'Saguna More, beside Maharaja and Sundar Vatika, Patna',map:'Kishan Palace, Saguna More, Patna, Bihar'}
+  home:{n:FAM?'कर्ण निवास':'Karn’s',s:FAM?'राजीव नगर':'Rajeev Nagar',a:FAM?'25D, राजीव नगर, पटना':'25D, Rajeev Nagar, Patna',map:'25D Rajeev Nagar, Patna, Bihar'},
+  palace:{n:FAM?'किशन पैलेस':'Kishan Palace',s:FAM?'सगुना मोड़':'Saguna More',a:FAM?'सगुना मोड़, महाराजा और सुंदर वाटिका के बगल में, पटना':'Saguna More, beside Maharaja and Sundar Vatika, Patna',map:'Kishan Palace, Saguna More, Patna, Bihar'}
 };
 const EV=[
-  {n:'Mehendi',k:'mehendi',d:'2027-01-27',t:'',v:'home'},
-  {n:'Haldi',k:'haldi',d:'2027-01-28',t:'',v:'home'},
-  {n:'Wedding',k:'wedding',d:'2027-01-29',t:'',v:'palace'}
+  {n:'Mehendi',h:'मेहंदी',k:'mehendi',d:'2027-01-27',t:'',v:'home'},
+  {n:'Haldi',h:'हल्दी',k:'haldi',d:'2027-01-28',t:'',v:'home'},
+  {n:'Wedding',h:'शुभ विवाह',k:'wedding',d:'2027-01-29',t:'',v:'palace'}
 ];
+const lbl=e=>FAM?e.h:e.n, LOC=FAM?'hi-IN':'en-GB', mon=d=>FAM?d+' जनवरी':d+' Jan';
 const mapUrl=v=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(VEN[v].map);
-const CH=[['Beginnings',0],['The couple',16.6],['Our story',21.3],['The date',31.4]];
+const CH=FAM?[['शुरुआत',0],['जोड़ी',16.6],['हमारी कहानी',21.3],['शुभ तिथि',31.4]]:[['Beginnings',0],['The couple',16.6],['Our story',21.3],['The date',31.4]];
 const $=id=>document.getElementById(id), RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 /* reveal on scroll */
@@ -499,11 +511,11 @@ function play(t){$('play').classList.add('off');V.controls=true;if(t!=null){try{
 $('play').onclick=()=>play();
 CH.forEach(([n,t])=>{const b=document.createElement('button');b.className='chip';b.textContent=n;b.onclick=()=>play(t);$('chips').appendChild(b)});
 V.addEventListener('timeupdate',()=>{const c=V.currentTime;let k=0;CH.forEach((x,i)=>{if(c>=x[1])k=i});[...$('chips').children].forEach((e,i)=>e.classList.toggle('on',i==k))});
-V.addEventListener('ended',()=>{V.controls=false;$('play').classList.remove('off');$('play').lastElementChild.textContent='Watch again'});
+V.addEventListener('ended',()=>{V.controls=false;$('play').classList.remove('off');$('play').lastElementChild.textContent=FAM?'फिर से देखें':'Watch again'});
 
 /* countdown (to 29 Jan 2027, India time) */
 const T0=new Date('2027-01-29T00:00:00+05:30');
-function tick(){const ms=T0-Date.now();if(ms<=0){$('cd').style.display='none';$('until').textContent=FAM?'Today is the day. Come, bless our children.':'Today is the day. Welcome to our new chapter.';return}
+function tick(){const ms=T0-Date.now();if(ms<=0){$('cd').style.display='none';$('until').textContent=FAM?'आज शुभ विवाह का दिन है। पधारिए, वर-वधू को आशीर्वाद दीजिए।':'Today is the day. Welcome to our new chapter.';return}
   const s=Math.floor(ms/1e3);$('cd-d').textContent=Math.floor(s/86400);$('cd-h').textContent=Math.floor(s%86400/3600);$('cd-m').textContent=Math.floor(s%3600/60);$('cd-s').textContent=s%60}
 tick();setInterval(tick,1000);
 
@@ -512,25 +524,25 @@ const PIN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-
 const DECO={mehendi:'<svg class="deco" viewBox="0 0 340 200"><use href="#petals"/></svg>',
   haldi:'<svg class="deco" viewBox="0 0 260 132"><use href="#sun"/></svg>',
   wedding:'<svg class="deco spin" viewBox="0 0 360 360" style="animation-duration:70s"><use href="#mandala"/></svg>'};
-$('evs').innerHTML=EV.map(e=>{const [y,m,d]=e.d.split('-').map(Number),dt=new Date(y,m-1,d),L=o=>dt.toLocaleDateString('en-GB',o);
+$('evs').innerHTML=EV.map(e=>{const [y,m,d]=e.d.split('-').map(Number),dt=new Date(y,m-1,d),L=o=>dt.toLocaleDateString(LOC,o);
   return `<article class="ev ${e.k} rv">${DECO[e.k]}<div class="day"><b>${d}</b><span>${L({month:'short'})}</span></div>
-  <h3>${e.n}</h3><p>${L({weekday:'long'})}, ${d} ${L({month:'long'})} ${y}</p><p class="where">${PIN}${VEN[e.v].n}, ${VEN[e.v].s}</p>${e.t?`<p>${e.t}</p>`:'<p class="tbc">Time to follow</p>'}</article>`}).join('');
-$('vens').innerHTML=[['palace','The Wedding','29 January'],['home','Mehendi & Haldi','27 & 28 January']].map(([v,what,when])=>
+  <h3>${lbl(e)}</h3><p>${L({weekday:'long'})}, ${d} ${L({month:'long'})} ${y}</p><p class="where">${PIN}${VEN[e.v].n}, ${VEN[e.v].s}</p>${e.t?`<p>${e.t}</p>`:`<p class="tbc">${FAM?'समय की सूचना शीघ्र दी जाएगी':'Time to follow'}</p>`}</article>`}).join('');
+$('vens').innerHTML=(FAM?[['palace','शुभ विवाह','29 जनवरी'],['home','मेहंदी एवं हल्दी','27 एवं 28 जनवरी']]:[['palace','The Wedding','29 January'],['home','Mehendi & Haldi','27 & 28 January']]).map(([v,what,when])=>
   `<article class="ven rv"><p class="label">${what} · ${when}</p><h3>${VEN[v].n}</h3><p>${VEN[v].a}</p>
-  <a class="btn b-map" href="${mapUrl(v)}" target="_blank" rel="noopener">${PIN}Open in Google Maps</a></article>`).join('');
+  <a class="btn b-map" href="${mapUrl(v)}" target="_blank" rel="noopener">${PIN}${FAM?'Google Maps में खोलें':'Open in Google Maps'}</a></article>`).join('');
 document.querySelectorAll('#vens .rv').forEach(el=>RM?el.classList.add('on'):io.observe(el));
 document.querySelectorAll('#evs .rv').forEach(el=>RM?el.classList.add('on'):io.observe(el));
 const ymd=s=>s.replace(/-/g,''),next=s=>{const d=new Date(s+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)};
 const SITE=location.origin+'/';
 function gcal(title,from,to,details,loc){return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates='+ymd(from)+'/'+ymd(next(to))+'&details='+encodeURIComponent(details+'\n\n'+SITE)+(loc?'&location='+encodeURIComponent(loc):'')}
 const vfull=e=>VEN[e.v].n+', '+VEN[e.v].a;
-const all=EV.map(e=>`${e.n}: ${+e.d.slice(8)} Jan${e.t?', '+e.t:''} · ${vfull(e)}\n${mapUrl(e.v)}`).join('\n\n');
-$('gc').innerHTML=`<a class="all" target="_blank" rel="noopener" href="${gcal('Ayushi & Rohan’s Wedding · Mehendi, Haldi & Wedding',EV[0].d,EV[EV.length-1].d,all)}">All 3 days<small>27 – 29 January 2027</small></a>`+
-  EV.map(e=>`<a target="_blank" rel="noopener" href="${gcal('Ayushi & Rohan’s '+e.n,e.d,e.d,(e.t?e.t+'\n':'')+'Join us for the '+e.n+'.\n\nMap: '+mapUrl(e.v),vfull(e))}">${e.n}<small>${+e.d.slice(8)} Jan</small></a>`).join('');
+const all=EV.map(e=>`${lbl(e)}: ${mon(+e.d.slice(8))}${e.t?', '+e.t:''} · ${vfull(e)}\n${mapUrl(e.v)}`).join('\n\n');
+$('gc').innerHTML=`<a class="all" target="_blank" rel="noopener" href="${gcal(FAM?'आयुषी संग रोहन का शुभ विवाह · मेहंदी, हल्दी एवं विवाह':'Ayushi & Rohan’s Wedding · Mehendi, Haldi & Wedding',EV[0].d,EV[EV.length-1].d,all)}">${FAM?'तीनों दिन<small>27 – 29 जनवरी 2027</small>':'All 3 days<small>27 – 29 January 2027</small>'}</a>`+
+  EV.map(e=>`<a target="_blank" rel="noopener" href="${gcal(FAM?'आयुषी संग रोहन · '+e.h:'Ayushi & Rohan’s '+e.n,e.d,e.d,(e.t?e.t+'\n':'')+(FAM?e.h+' में पधारिए।\n\nनक्शा: ':'Join us for the '+e.n+'.\n\nMap: ')+mapUrl(e.v),vfull(e))}">${lbl(e)}<small>${mon(+e.d.slice(8))}</small></a>`).join('');
 
 /* rsvp: saved to /api/rsvp, viewed at /admin. One id per device, so a changed reply updates the same row. */
 let att=null,days=EV.map(e=>e.n);
-$('days').innerHTML=EV.map(e=>`<button aria-pressed="true" data-n="${e.n}">${e.n}<small>${+e.d.slice(8)} Jan</small></button>`).join('');
+$('days').innerHTML=EV.map(e=>`<button aria-pressed="true" data-n="${e.n}">${lbl(e)}<small>${mon(+e.d.slice(8))}</small></button>`).join('');
 const dayBtns=[...$('days').children];
 function showDays(){dayBtns.forEach(b=>b.setAttribute('aria-pressed',days.includes(b.dataset.n)))}
 dayBtns.forEach(b=>b.onclick=()=>{const n=b.dataset.n;days=days.includes(n)?days.filter(x=>x!=n):EV.map(e=>e.n).filter(x=>x==n||days.includes(x));showDays();$('msg').textContent=''});
@@ -538,38 +550,47 @@ function pick(y){att=y;$('yes').setAttribute('aria-pressed',y);$('no').setAttrib
 $('yes').onclick=()=>pick(true);$('no').onclick=()=>pick(false);
 const list=a=>a.length==EV.length?'all 3 days':a.length>1?a.slice(0,-1).join(', ')+' & '+a.at(-1):a[0];
 function summary(){const n=$('nm').value.trim();
-  if(FAM)return att?`Thank you, ${n}! Your blessings mean everything to us. See you for ${list(days)}.`
-                  :`We will miss you, ${n}. Do send your blessings to Ayushi and Rohan.`;
+  if(FAM){const h=days.map(x=>EV.find(e=>e.n==x).h),when=h.length==EV.length?'तीनों दिन':(h.length>1?h.slice(0,-1).join(', ')+' और '+h.at(-1):h[0])+' पर';
+    return att?`धन्यवाद, ${n}! ${when} आपकी प्रतीक्षा रहेगी।`
+              :`${n}, आपकी कमी खलेगी। वर-वधू को अपना शुभाशीर्वाद अवश्य भेजें।`}
   return att?`We can’t wait to see you, ${n}! See you for ${list(days)}.`
             :`We’ll miss you, ${n}. Thank you for your love and blessings.`}
-function ok(){if(att===null){$('msg').textContent='Please choose whether you can come.';return false}
-  if(!$('nm').value.trim()){$('msg').textContent='Please add your name.';$('nm').focus();return false}
-  if(att&&!days.length){$('msg').textContent='Please pick at least one day.';return false}return true}
+function ok(){if(att===null){$('msg').textContent=FAM?'कृपया बताएँ कि आप पधार सकेंगे या नहीं।':'Please choose whether you can come.';return false}
+  if(!$('nm').value.trim()){$('msg').textContent=FAM?'कृपया अपना नाम लिखें।':'Please add your name.';$('nm').focus();return false}
+  if(att&&!days.length){$('msg').textContent=FAM?'कृपया कम से कम एक कार्यक्रम चुनें।':'Please pick at least one day.';return false}return true}
 function done(){try{localStorage.setItem('rsvp',JSON.stringify({att,days,n:$('nm').value,t:$('nt').value}))}catch(e){}
   $('pv').textContent=summary();$('form').classList.add('done')}
 function rid(){try{let i=localStorage.getItem('rsvp-id');if(!i){i=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));localStorage.setItem('rsvp-id',i)}return i}catch(e){return Date.now().toString(36)+Math.random().toString(36).slice(2)}}
+const SEND=FAM?'उत्तर भेजें':'Send my reply';$('send').textContent=SEND;
+if(FAM){$('nm').placeholder='जैसे: शर्मा परिवार';$('nt').placeholder='वैकल्पिक'}
 $('send').onclick=async()=>{if(!ok())return;
-  const b=$('send');b.disabled=true;b.textContent='Sending…';$('msg').textContent='';
+  const b=$('send');b.disabled=true;b.textContent=FAM?'भेजा जा रहा है…':'Sending…';$('msg').textContent='';
   try{const r=await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({id:rid(),name:$('nm').value.trim(),attending:att,days,message:$('nt').value.trim(),via:FAM?'family':''})});
     if(!r.ok)throw 0;done()}
-  catch(e){$('msg').textContent='Sorry, that didn’t go through. Please try again in a moment.'}
-  b.disabled=false;b.textContent='Send my reply'};
+  catch(e){$('msg').textContent=FAM?'क्षमा करें, उत्तर नहीं भेजा जा सका। कृपया थोड़ी देर बाद पुनः प्रयास करें।':'Sorry, that didn’t go through. Please try again in a moment.'}
+  b.disabled=false;b.textContent=SEND};
 $('edit').onclick=()=>$('form').classList.remove('done');
 try{const r=JSON.parse(localStorage.getItem('rsvp')||'null');if(r){$('nm').value=r.n;$('nt').value=r.t;if(r.days)days=r.days;showDays();pick(r.att);done()}}catch(e){}
 
-/* music: Mangal Rang. Starts on the first tap of the cover button; pauses while the film plays. */
-const M=new Audio('/assets/mangal-rang.m4a');M.loop=true;M.preload='none';M.volume=.8;
-let mStarted=false,mResume=false;
+/* music, /family only: Maahi Ve, 3:45–4:25 cut into its own looping file. Autoplays where the browser allows,
+   otherwise starts on the first tap anywhere; pauses while the film plays. */
+if(FAM){
+const M=new Audio('/assets/maahi-ve.m4a');M.loop=true;M.preload='auto';M.volume=.45;
+let mResume=false,mUserPaused=false;
 const musBtns=[...document.querySelectorAll('[data-music]')];
-function musUI(){const on=!M.paused;musBtns.forEach(b=>{b.classList.toggle('playing',on);b.setAttribute('aria-label',on?'Pause music':'Play Mangal Rang')});
-  document.querySelectorAll('.song-s').forEach(s=>s.textContent=on?'Playing · tap to pause':'Play it while you read')}
-function musPlay(){mStarted=true;M.play().catch(()=>{})}
+function musUI(){const on=!M.paused;musBtns.forEach(b=>{b.classList.toggle('playing',on);b.setAttribute('aria-label',on?'संगीत रोकें':'माही वे चलाएँ')});
+  document.querySelectorAll('.song-s').forEach(s=>s.textContent=on?'बज रहा है · रोकने के लिए छुएँ':'पढ़ते हुए सुनिए')}
+const musPlay=()=>M.play().catch(()=>{});
 M.addEventListener('play',musUI);M.addEventListener('pause',musUI);
-musBtns.forEach(b=>b.onclick=()=>M.paused?musPlay():M.pause());
-$('begin').addEventListener('click',()=>{if(!mStarted)musPlay()});
+musBtns.forEach(b=>b.onclick=e=>{e.stopPropagation();if(M.paused){mUserPaused=false;musPlay()}else{mUserPaused=true;M.pause()}});
+/* browsers block sound until a tap, so try now and again on the first interaction */
+const kick=e=>{if(e.target.closest&&e.target.closest('[data-music]'))return;if(M.paused&&!mUserPaused&&V.paused)musPlay();['pointerdown','keydown','touchend'].forEach(ev=>removeEventListener(ev,kick,true))};
+['pointerdown','keydown','touchend'].forEach(ev=>addEventListener(ev,kick,true));
+musPlay();
 V.addEventListener('play',()=>{if(!M.paused){mResume=true;M.pause()}});
 ['pause','ended'].forEach(ev=>V.addEventListener(ev,()=>{if(mResume){mResume=false;musPlay()}}));
+}
 
 /* floating RSVP */
 let past=false,atR=false;

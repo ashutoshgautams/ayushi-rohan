@@ -51,7 +51,7 @@ input:focus{border-color:var(--sky)}
 .row{background:var(--cream);border-radius:16px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:start}
 .row h3{font-weight:600;font-size:21px;line-height:1.2}
 .pill{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-left:6px;vertical-align:3px}
-.pill.y{background:#689F9C;color:#fff}.pill.n{background:#6E30141a;color:var(--brown)}
+.pill.y{background:#689F9C;color:#fff}.pill.f{background:#F0C2B4;color:var(--brown)}.pill.n{background:#6E30141a;color:var(--brown)}
 .meta{grid-column:1/-1;font-size:16px;opacity:.85}
 .msg{grid-column:1/-1;font-style:italic;font-size:17px;background:#fff;border-left:3px solid var(--gold);padding:8px 12px;border-radius:0 10px 10px 0;margin-top:4px;white-space:pre-wrap}
 .when{font-size:14px;opacity:.6;white-space:nowrap;text-align:right}
@@ -132,7 +132,7 @@ function render(){
   const q=$('q').value.trim().toLowerCase();
   const list=rows.filter(r=>(filter=='all'||(filter=='y'&&r.attending)||(filter=='n'&&!r.attending)||(filter=='m'&&r.message))&&(!q||(r.name+' '+r.message).toLowerCase().includes(q)));
   $('list').innerHTML=list.length?list.map(r=>`<article class="row">
-    <h3>${esc(r.name)}<span class="pill ${r.attending?'y':'n'}">${r.attending?'Coming':'Can’t come'}</span></h3>
+    <h3>${esc(r.name)}<span class="pill ${r.attending?'y':'n'}">${r.attending?'Coming':'Can’t come'}</span>${r.via=='family'?'<span class="pill f">Maa’s link</span>':''}</h3>
     <div class="when">${when(r.at)}<br><button class="del" data-id="${esc(r.id)}">Delete</button></div>
     ${r.attending?`<div class="meta">${r.days.length==3?'All 3 days':esc(r.days.join(', '))}</div>`:''}
     ${r.message?`<div class="msg">${esc(r.message)}</div>`:''}

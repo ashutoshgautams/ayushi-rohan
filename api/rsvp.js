@@ -68,6 +68,7 @@ module.exports = async (req, res) => {
         id, name, attending,
         days: attending ? (Array.isArray(b.days) ? b.days : []).filter(d => DAYS.includes(d)) : [],
         message: clip(b.message, 1000),
+        via: b.via === 'family' ? 'family' : '',
         at: new Date().toISOString()
       };
       await save(PREFIX + id + '.json', JSON.stringify(row));

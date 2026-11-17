@@ -19,6 +19,11 @@ The admin page shows: total guests, yes / can't come, headcount for each day, ev
 search, a filter, **Download CSV** (opens in Excel or Google Sheets), and Delete for test entries.
 If a guest changes their reply on the same phone, their row is updated, not duplicated.
 
+## Family link: /family
+`https://your-url/family` is the same invite written from Ayushi's mother's side: a letter card from Jaya Karn
+after the cover, and the cover, film, countdown and footer wording in her voice. Everything else (video, venues, calendar, RSVP) is shared,
+so edits to the main invite show up there too. RSVPs sent from this link are tagged "Maa's link" in /admin.
+
 ## Google Calendar
 The festivities section has one "Add to Google Calendar" box: **All 3 days** (27–29 Jan) or any single day.
 Direct link to it to share on its own: `https://your-url/#calendar`.

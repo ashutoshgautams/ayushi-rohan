@@ -32,6 +32,8 @@
 <link rel="preload" href="/assets/fonts/great-vibes.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/cormorant-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 
+<script>/* /family = the same invite, written from Ayushi's mother's side */
+var FAM=/^\/family\/?$/.test(location.pathname);if(FAM){document.documentElement.classList.add('fam');document.title='Jaya Karn invites you · Ayushi & Rohan · 29 January 2027'}</script>
 <style>
 @font-face{font-family:"Great Vibes";src:url(/assets/fonts/great-vibes.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Parisienne A";src:url(/assets/fonts/parisienne-a.woff2) format("woff2");font-display:swap}
@@ -173,6 +175,22 @@ section{position:relative;overflow:hidden;isolation:isolate}
 .ev .tbc{font-style:italic;opacity:.8;font-size:17px}
 .ev .where{display:flex;align-items:center;gap:6px;font-weight:600}
 .ev .where svg,.b-map svg{width:16px;height:16px;fill:currentColor;flex:none}
+/* ---------- /family wording ---------- */
+.v-fam{display:none}.fam .v-fam{display:inline}.fam .v-cpl{display:none}
+html:not(.fam) .fam-only{display:none!important}
+/* ---------- 1b · a note from Maa (/family only) ---------- */
+#note{background:radial-gradient(70% 60% at 50% 0%,#FBE3D8,transparent),linear-gradient(180deg,#F6D9CC,var(--cream));padding:78px 0 84px;text-align:center}
+.letter{position:relative;margin:0 auto;max-width:480px;background:var(--cream-l);border-radius:6px;padding:40px 28px 36px;color:var(--brown);
+  box-shadow:inset 0 0 0 10px var(--cream-l),inset 0 0 0 11px #E3B84E99,inset 0 0 0 14px var(--cream-l),inset 0 0 0 15px #E3B84E55,0 30px 50px -26px #7a3a1a88;transform:rotate(-.6deg)}
+.letter svg.seal{width:74px;height:auto;aspect-ratio:300/340;margin:0 auto 6px}
+.letter .label{color:var(--coral);font-size:12px}
+.letter .dear{font-family:var(--script);font-size:clamp(40px,11vw,50px);line-height:1.1;margin:10px 0 14px;color:var(--brown)}
+.letter .body{display:grid;gap:14px;font-size:clamp(19px,5vw,21px);line-height:1.55;font-style:italic;text-align:left;padding:0 4px}
+.letter .body p:first-child::first-letter{font-family:var(--script);font-style:normal;font-size:3.1em;float:left;line-height:.8;margin:.08em .08em 0 0;color:var(--coral)}
+.letter .sign{margin-top:22px}
+.letter .sign p{font-style:italic;font-size:18px;opacity:.85}
+.letter .sign .script{font-size:clamp(42px,11vw,52px);color:var(--coral);margin-top:2px;opacity:1;font-style:normal}
+.letter .sign small{display:block;font-size:15px;letter-spacing:.2em;text-transform:uppercase;opacity:.65;margin-top:4px}
 /* ---------- 5b · venues ---------- */
 #venue{background:var(--sky);color:var(--ivory);padding:80px 0 84px;text-align:center}
 #venue .speck{position:absolute;inset:0;background:url(/assets/speckle.svg) 0 0/360px;opacity:.6;z-index:1}
@@ -277,12 +295,33 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco p-br" viewBox="0 0 340 200"><g class="sway" style="animation-delay:-4s"><use href="#petals"/></g></svg>
   <div class="in">
     <svg class="crest rv" viewBox="0 0 300 340" role="img" aria-label="A and R monogram"><use href="#mono"/></svg>
-    <p class="opener lyric rv">Every story has a beginning</p>
+    <p class="opener lyric rv"><span class="v-cpl">Every story has a beginning</span><span class="v-fam">With the blessings of our elders</span></p>
     <h1 class="names script ink"><span class="cap">A</span>yushi <span class="amp">&amp;</span> Rohan</h1>
-    <p class="tag lyric rv">together, we are beginning a new chapter</p>
+    <p class="tag lyric rv"><span class="v-cpl">together, we are beginning a new chapter</span><span class="v-fam">our daughter begins a new chapter, and we would love you there</span></p>
     <p class="dateline rv"><i></i>29 January 2027<i></i></p>
     <a class="btn b-ivory scroll rv" href="#film">Begin our story
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
+  </div>
+</section>
+
+<!-- 1b · A note from Maa (/family only) -->
+<section id="note" class="fam-only" aria-labelledby="nh">
+  <div class="in">
+    <article class="letter rv">
+      <svg class="seal" viewBox="0 0 300 340" aria-hidden="true"><use href="#mono"/></svg>
+      <p class="label">A note from Ayushi’s Maa</p>
+      <h2 class="dear" id="nh">Dear family,</h2>
+      <div class="body">
+        <p>Every story has a beginning. Ayushi’s began in our arms, and ever since, she has filled our home with laughter, music and light.</p>
+        <p>Now our daughter is beginning a new chapter with Rohan, and my heart is fuller than I can put into words.</p>
+        <p>It would mean the world to us if you could be there: at home for the Mehendi and Haldi, and at Kishan Palace for the wedding. Come, bless them, and celebrate with us.</p>
+      </div>
+      <div class="sign">
+        <p>With love and blessings,</p>
+        <p class="script">Jaya Karn</p>
+        <small>Ayushi’s Maa</small>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -294,7 +333,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco sun-br" viewBox="0 0 260 132"><use href="#sun"/></svg>
   <div class="in">
     <p class="label rv">Chapter one</p>
-    <h2 class="h-script script rv" id="fh">You’re invited into our story</h2>
+    <h2 class="h-script script rv" id="fh"><span class="v-cpl">You’re invited into our story</span><span class="v-fam">You’re invited into their story</span></h2>
     <p class="lead lyric rv">Turn your sound on. It begins with a song.</p>
     <div class="mat rv">
       <div class="player">
@@ -345,7 +384,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
       <div><b id="cd-d">0</b><span>days</span></div><div><b id="cd-h">0</b><span>hours</span></div>
       <div><b id="cd-m">0</b><span>mins</span></div><div><b id="cd-s">0</b><span>secs</span></div>
     </div>
-    <p class="until rv" id="until">until we begin our new chapter</p>
+    <p class="until rv" id="until"><span class="v-cpl">until we begin our new chapter</span><span class="v-fam">until our Ayushi begins her new chapter</span></p>
   </div>
 </section>
 
@@ -405,8 +444,8 @@ footer p.script{font-style:normal;color:var(--ivory)}
 
 <footer>
   <svg viewBox="0 0 300 340" aria-hidden="true"><use href="#mono"/></svg>
-  <p>With love,</p>
-  <p class="script"><span class="cap">A</span>yushi &amp; Rohan</p>
+  <p><span class="v-cpl">With love,</span><span class="v-fam">With love and blessings,</span></p>
+  <p class="script"><span class="v-cpl"><span class="cap">A</span>yushi &amp; Rohan</span><span class="v-fam">Jaya Karn &amp; family</span></p>
 </footer>
 
 <a class="btn fab" id="fab" href="#rsvp">RSVP</a>
@@ -441,7 +480,7 @@ V.addEventListener('ended',()=>{V.controls=false;$('play').classList.remove('off
 
 /* countdown (to 29 Jan 2027, India time) */
 const T0=new Date('2027-01-29T00:00:00+05:30');
-function tick(){const ms=T0-Date.now();if(ms<=0){$('cd').style.display='none';$('until').textContent='Today is the day. Welcome to our new chapter.';return}
+function tick(){const ms=T0-Date.now();if(ms<=0){$('cd').style.display='none';$('until').textContent=FAM?'Today is the day. Come, bless the couple.':'Today is the day. Welcome to our new chapter.';return}
   const s=Math.floor(ms/1e3);$('cd-d').textContent=Math.floor(s/86400);$('cd-h').textContent=Math.floor(s%86400/3600);$('cd-m').textContent=Math.floor(s%3600/60);$('cd-s').textContent=s%60}
 tick();setInterval(tick,1000);
 
@@ -487,7 +526,7 @@ function rid(){try{let i=localStorage.getItem('rsvp-id');if(!i){i=(crypto.random
 $('send').onclick=async()=>{if(!ok())return;
   const b=$('send');b.disabled=true;b.textContent='Sending…';$('msg').textContent='';
   try{const r=await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({id:rid(),name:$('nm').value.trim(),attending:att,days,message:$('nt').value.trim()})});
+      body:JSON.stringify({id:rid(),name:$('nm').value.trim(),attending:att,days,message:$('nt').value.trim(),via:FAM?'family':''})});
     if(!r.ok)throw 0;done()}
   catch(e){$('msg').textContent='Sorry, that didn’t go through. Please try again in a moment.'}
   b.disabled=false;b.textContent='Send my reply'};

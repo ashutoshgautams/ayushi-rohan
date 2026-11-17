@@ -33,7 +33,7 @@
 <link rel="preload" href="/assets/fonts/cormorant-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 
 <script>/* /family = the same invite, written from Ayushi's mother's side */
-var FAM=/^\/family\/?$/.test(location.pathname);if(FAM){document.documentElement.classList.add('fam');document.title='Jaya Karn invites you · Ayushi & Rohan · 29 January 2027'}</script>
+var FAM=/^\/family\/?$/.test(location.pathname);if(FAM){document.documentElement.classList.add('fam');addEventListener('DOMContentLoaded',function(){var b=document.getElementById('begin');if(b)b.href='#note'});document.title='Jaya Karn invites you · Ayushi & Rohan · 29 January 2027'}</script>
 <style>
 @font-face{font-family:"Great Vibes";src:url(/assets/fonts/great-vibes.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"Parisienne A";src:url(/assets/fonts/parisienne-a.woff2) format("woff2");font-display:swap}
@@ -191,6 +191,21 @@ html:not(.fam) .fam-only{display:none!important}
 .letter .sign p{font-style:italic;font-size:18px;opacity:.85}
 .letter .sign .script{font-size:clamp(42px,11vw,52px);color:var(--coral);margin-top:2px;opacity:1;font-style:normal}
 .letter .sign small{display:block;font-size:15px;letter-spacing:.2em;text-transform:uppercase;opacity:.65;margin-top:4px}
+/* ---------- music: Mangal Rang ---------- */
+.song-i{position:relative;display:grid;place-items:center}
+.eq{display:none;gap:3px;align-items:flex-end;height:16px}.eq i{width:3px;background:currentColor;border-radius:2px;animation:eq 1s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:-.35s}.eq i:nth-child(3){animation-delay:-.7s}
+@keyframes eq{0%,100%{height:4px}50%{height:16px}}
+.playing .eq{display:flex}.playing .i-play{display:none}
+.mus{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:31;width:46px;height:46px;border-radius:50%;background:#FBF1DCee;color:var(--coral);display:grid;place-items:center;box-shadow:0 6px 18px #0004;border:1px solid #E3B84E88}
+.mus svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mus.playing{background:var(--coral);color:#fff;border-color:var(--coral)}
+.song{display:flex;align-items:center;gap:12px;margin:0 auto 22px;padding:8px 18px 8px 8px;border-radius:999px;border:1.5px solid #E3B84E99;background:#fff;color:var(--brown);text-align:left;box-shadow:0 6px 16px -10px #7a3a1a66}
+.song .song-i{width:40px;height:40px;border-radius:50%;background:var(--coral);color:#fff}
+.song .i-play{width:16px;height:16px;fill:#fff;margin-left:2px}
+.song b{display:block;font-weight:600;font-size:18px;line-height:1.1}
+.song small{display:block;font-style:italic;font-size:14px;opacity:.75}
+@media (prefers-reduced-motion:reduce){.eq i{animation:none;height:10px}}
 /* ---------- 5b · venues ---------- */
 #venue{background:var(--sky);color:var(--ivory);padding:80px 0 84px;text-align:center}
 #venue .speck{position:absolute;inset:0;background:url(/assets/speckle.svg) 0 0/360px;opacity:.6;z-index:1}
@@ -295,11 +310,11 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco p-br" viewBox="0 0 340 200"><g class="sway" style="animation-delay:-4s"><use href="#petals"/></g></svg>
   <div class="in">
     <svg class="crest rv" viewBox="0 0 300 340" role="img" aria-label="A and R monogram"><use href="#mono"/></svg>
-    <p class="opener lyric rv"><span class="v-cpl">Every story has a beginning</span><span class="v-fam">With the blessings of our elders</span></p>
+    <p class="opener lyric rv"><span class="v-cpl">Every story has a beginning</span><span class="v-fam">Our daughter is getting married</span></p>
     <h1 class="names script ink"><span class="cap">A</span>yushi <span class="amp">&amp;</span> Rohan</h1>
-    <p class="tag lyric rv"><span class="v-cpl">together, we are beginning a new chapter</span><span class="v-fam">our daughter begins a new chapter, and we would love you there</span></p>
+    <p class="tag lyric rv"><span class="v-cpl">together, we are beginning a new chapter</span><span class="v-fam">come, bless them, and make our happiness complete</span></p>
     <p class="dateline rv"><i></i>29 January 2027<i></i></p>
-    <a class="btn b-ivory scroll rv" href="#film">Begin our story
+    <a class="btn b-ivory scroll rv" id="begin" href="#film"><span class="v-cpl">Begin our story</span><span class="v-fam">Read Maa’s note</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
   </div>
 </section>
@@ -309,15 +324,20 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <div class="in">
     <article class="letter rv">
       <svg class="seal" viewBox="0 0 300 340" aria-hidden="true"><use href="#mono"/></svg>
-      <p class="label">A note from Ayushi’s Maa</p>
-      <h2 class="dear" id="nh">Dear family,</h2>
+      <p class="label">From Ayushi’s Maa, with love</p>
+      <h2 class="dear" id="nh">To all our loved ones,</h2>
+      <button class="song" data-music aria-label="Play Mangal Rang">
+        <span class="song-i"><svg class="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg><span class="eq"><i></i><i></i><i></i></span></span>
+        <span><b>Mangal Rang</b><small class="song-s">Play it while you read</small></span>
+      </button>
       <div class="body">
-        <p>Every story has a beginning. Ayushi’s began in our arms, and ever since, she has filled our home with laughter, music and light.</p>
-        <p>Now our daughter is beginning a new chapter with Rohan, and my heart is fuller than I can put into words.</p>
-        <p>It would mean the world to us if you could be there: at home for the Mehendi and Haldi, and at Kishan Palace for the wedding. Come, bless them, and celebrate with us.</p>
+        <p>Some moments feel like yesterday. Ayushi’s first wobbly steps across our home, her tiny hand refusing to let go of my finger, her laughter filling every corner of the house.</p>
+        <p>And now, somehow, my little girl is a bride. She is about to begin a new life with Rohan, and my heart holds two feelings at once: the ache of letting her go, and a happiness I cannot put into words.</p>
+        <p>A daughter’s wedding is the biggest day of a mother’s life, and it will not be complete without you. Come early, fill our home with songs at the Mehendi and Haldi, and stand with us at Kishan Palace as Ayushi and Rohan begin their life together.</p>
+        <p>Your presence is the only gift we ask for. Your blessings are what she will carry with her.</p>
       </div>
       <div class="sign">
-        <p>With love and blessings,</p>
+        <p>With folded hands and a full heart,</p>
         <p class="script">Jaya Karn</p>
         <small>Ayushi’s Maa</small>
       </div>
@@ -333,8 +353,8 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco sun-br" viewBox="0 0 260 132"><use href="#sun"/></svg>
   <div class="in">
     <p class="label rv">Chapter one</p>
-    <h2 class="h-script script rv" id="fh"><span class="v-cpl">You’re invited into our story</span><span class="v-fam">You’re invited into their story</span></h2>
-    <p class="lead lyric rv">Turn your sound on. It begins with a song.</p>
+    <h2 class="h-script script rv" id="fh"><span class="v-cpl">You’re invited into our story</span><span class="v-fam">A little film from the children</span></h2>
+    <p class="lead lyric rv"><span class="v-cpl">Turn your sound on. It begins with a song.</span><span class="v-fam">Ayushi and Rohan made this for you. Turn your sound on.</span></p>
     <div class="mat rv">
       <div class="player">
         <video id="v" playsinline webkit-playsinline preload="metadata" poster="/assets/poster.jpg" src="/assets/film.mp4"></video>
@@ -359,11 +379,11 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <div class="in">
     <p class="label rv">Chapter two</p>
     <h2 class="h-script script rv" id="sh">Two hearts, one story</h2>
-    <p class="mith lyric rv">From the lands of Mithila and Bhojpur, two stories became one.</p>
+    <p class="mith lyric rv"><span class="v-cpl">From the lands of Mithila and Bhojpur, two stories became one.</span><span class="v-fam">A daughter of Mithila, a son of Bhojpur, and now, one family.</span></p>
     <div class="album">
       <figure class="pol pol1 rv"><span class="tape"></span><img src="/assets/couple-1.jpg" width="480" height="332" alt="Ayushi and Rohan by the sea" loading="lazy"></figure>
       <figure class="pol pol2 rv"><span class="tape" style="transform:rotate(5deg)"></span><img src="/assets/couple-2.jpg" width="476" height="566" alt="Rohan and Ayushi smiling at each other" loading="lazy"></figure>
-      <p class="note rv">Two people, and a great deal of ordinary, unremarkable luck.</p>
+      <p class="note rv"><span class="v-cpl">Two people, and a great deal of ordinary, unremarkable luck.</span><span class="v-fam">We prayed for someone who would love her the way we do. Then came Rohan.</span></p>
     </div>
   </div>
 </section>
@@ -374,7 +394,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco m-l spin" viewBox="0 0 360 360" style="animation-duration:90s"><use href="#mandala"/></svg>
   <svg class="deco m-r spin" viewBox="0 0 360 360" style="animation-duration:90s;animation-direction:reverse"><use href="#mandala"/></svg>
   <div class="in">
-    <p class="lyric rv" id="dh">So, in ink and marigold, we write</p>
+    <p class="lyric rv" id="dh"><span class="v-cpl">So, in ink and marigold, we write</span><span class="v-fam">The day we have waited for</span></p>
     <div class="bigdate rv">
       <span class="label">Friday</span>
       <b>29</b>
@@ -384,7 +404,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
       <div><b id="cd-d">0</b><span>days</span></div><div><b id="cd-h">0</b><span>hours</span></div>
       <div><b id="cd-m">0</b><span>mins</span></div><div><b id="cd-s">0</b><span>secs</span></div>
     </div>
-    <p class="until rv" id="until"><span class="v-cpl">until we begin our new chapter</span><span class="v-fam">until our Ayushi begins her new chapter</span></p>
+    <p class="until rv" id="until"><span class="v-cpl">until we begin our new chapter</span><span class="v-fam">until our little girl becomes a bride</span></p>
   </div>
 </section>
 
@@ -392,7 +412,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
 <section id="fest" class="grain" aria-labelledby="eh">
   <div class="in">
     <p class="label rv">Chapter three</p>
-    <h2 class="h-script script rv" id="eh">Wedding festivities</h2>
+    <h2 class="h-script script rv" id="eh"><span class="v-cpl">Wedding festivities</span><span class="v-fam">Three days of joy</span></h2>
     <svg class="rule rv" viewBox="0 0 264 16" style="color:var(--sun-d);margin:-14px auto 26px"><use href="#rule"/></svg>
     <div class="evs" id="evs"></div>
     <div class="cal rv" id="calendar">
@@ -418,9 +438,9 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <svg class="deco ch-tr spin" viewBox="0 0 212 212" style="animation-duration:120s"><use href="#chrys"/></svg>
   <svg class="deco ch-bl" viewBox="0 0 212 212"><use href="#chrys"/></svg>
   <div class="in">
-    <p class="label rv">The last page is yours</p>
-    <h2 class="h-script script rv" id="rh">Will you celebrate with us?</h2>
-    <p class="lyric rv" style="font-size:20px">Please let us know if you can join us.</p>
+    <p class="label rv"><span class="v-cpl">The last page is yours</span><span class="v-fam">One small request</span></p>
+    <h2 class="h-script script rv" id="rh"><span class="v-cpl">Will you celebrate with us?</span><span class="v-fam">Will you be there for her?</span></h2>
+    <p class="lyric rv" style="font-size:20px"><span class="v-cpl">Please let us know if you can join us.</span><span class="v-fam">Please tell us if you can come. It helps us plan, and it would make me very happy.</span></p>
     <div class="form rv" id="form">
       <div class="ask">
         <div class="two" role="group" aria-label="Your reply">
@@ -448,6 +468,9 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <p class="script"><span class="v-cpl"><span class="cap">A</span>yushi &amp; Rohan</span><span class="v-fam">Jaya Karn &amp; family</span></p>
 </footer>
 
+<button class="mus" id="mus" data-music aria-label="Play Mangal Rang">
+  <span class="song-i"><svg class="i-play" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="eq"><i></i><i></i><i></i></span></span>
+</button>
 <a class="btn fab" id="fab" href="#rsvp">RSVP</a>
 
 <script>
@@ -480,7 +503,7 @@ V.addEventListener('ended',()=>{V.controls=false;$('play').classList.remove('off
 
 /* countdown (to 29 Jan 2027, India time) */
 const T0=new Date('2027-01-29T00:00:00+05:30');
-function tick(){const ms=T0-Date.now();if(ms<=0){$('cd').style.display='none';$('until').textContent=FAM?'Today is the day. Come, bless the couple.':'Today is the day. Welcome to our new chapter.';return}
+function tick(){const ms=T0-Date.now();if(ms<=0){$('cd').style.display='none';$('until').textContent=FAM?'Today is the day. Come, bless our children.':'Today is the day. Welcome to our new chapter.';return}
   const s=Math.floor(ms/1e3);$('cd-d').textContent=Math.floor(s/86400);$('cd-h').textContent=Math.floor(s%86400/3600);$('cd-m').textContent=Math.floor(s%3600/60);$('cd-s').textContent=s%60}
 tick();setInterval(tick,1000);
 
@@ -515,6 +538,8 @@ function pick(y){att=y;$('yes').setAttribute('aria-pressed',y);$('no').setAttrib
 $('yes').onclick=()=>pick(true);$('no').onclick=()=>pick(false);
 const list=a=>a.length==EV.length?'all 3 days':a.length>1?a.slice(0,-1).join(', ')+' & '+a.at(-1):a[0];
 function summary(){const n=$('nm').value.trim();
+  if(FAM)return att?`Thank you, ${n}! Your blessings mean everything to us. See you for ${list(days)}.`
+                  :`We will miss you, ${n}. Do send your blessings to Ayushi and Rohan.`;
   return att?`We can’t wait to see you, ${n}! See you for ${list(days)}.`
             :`We’ll miss you, ${n}. Thank you for your love and blessings.`}
 function ok(){if(att===null){$('msg').textContent='Please choose whether you can come.';return false}
@@ -532,6 +557,19 @@ $('send').onclick=async()=>{if(!ok())return;
   b.disabled=false;b.textContent='Send my reply'};
 $('edit').onclick=()=>$('form').classList.remove('done');
 try{const r=JSON.parse(localStorage.getItem('rsvp')||'null');if(r){$('nm').value=r.n;$('nt').value=r.t;if(r.days)days=r.days;showDays();pick(r.att);done()}}catch(e){}
+
+/* music: Mangal Rang. Starts on the first tap of the cover button; pauses while the film plays. */
+const M=new Audio('/assets/mangal-rang.m4a');M.loop=true;M.preload='none';M.volume=.8;
+let mStarted=false,mResume=false;
+const musBtns=[...document.querySelectorAll('[data-music]')];
+function musUI(){const on=!M.paused;musBtns.forEach(b=>{b.classList.toggle('playing',on);b.setAttribute('aria-label',on?'Pause music':'Play Mangal Rang')});
+  document.querySelectorAll('.song-s').forEach(s=>s.textContent=on?'Playing · tap to pause':'Play it while you read')}
+function musPlay(){mStarted=true;M.play().catch(()=>{})}
+M.addEventListener('play',musUI);M.addEventListener('pause',musUI);
+musBtns.forEach(b=>b.onclick=()=>M.paused?musPlay():M.pause());
+$('begin').addEventListener('click',()=>{if(!mStarted)musPlay()});
+V.addEventListener('play',()=>{if(!M.paused){mResume=true;M.pause()}});
+['pause','ended'].forEach(ev=>V.addEventListener(ev,()=>{if(mResume){mResume=false;musPlay()}}));
 
 /* floating RSVP */
 let past=false,atR=false;

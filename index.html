@@ -33,7 +33,7 @@
 <link rel="preload" href="/assets/fonts/cormorant-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 
 <script>/* /family = the same invite, written from Ayushi's mother's side */
-var FAM=/^\/family\/?$/.test(location.pathname);if(FAM){document.documentElement.classList.add('fam');document.documentElement.lang='hi';addEventListener('DOMContentLoaded',function(){var b=document.getElementById('begin');if(b)b.href='#note'});document.title='शुभ विवाह · आयुषी संग रोहन · 29 जनवरी 2027'}</script>
+var FAM=/^\/family\/?$/.test(location.pathname)||/[?&]family\b/.test(location.search);if(FAM){document.documentElement.classList.add('fam');document.documentElement.lang='hi';addEventListener('DOMContentLoaded',function(){var b=document.getElementById('begin');if(b)b.href='#note'});document.title='शुभ विवाह · आयुषी संग रोहन · 29 जनवरी 2027'}</script>
 <style>
 /* Devanagari only, for the Hindi /family page; unicode-range keeps them off the English invite */
 @font-face{font-family:"Yatra One";src:url(/assets/fonts/yatra-one-deva.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF;font-display:swap}
@@ -182,6 +182,7 @@ section{position:relative;overflow:hidden;isolation:isolate}
 /* ---------- /family wording ---------- */
 .v-fam{display:none}.fam .v-fam{display:inline}.fam .v-cpl{display:none}
 html:not(.fam) .fam-only{display:none!important}
+.fam .cpl-only{display:none!important}
 /* Hindi: wide tracking breaks Devanagari, and the drop cap would split a conjunct */
 .fam *{letter-spacing:normal!important}
 .fam .ven h3,.fam .ev h3,.fam .h-script,.fam .letter .dear{line-height:1.4}
@@ -365,7 +366,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <div class="in">
     <p class="label rv"><span class="v-cpl">Chapter one</span><span class="v-fam">पहला अध्याय</span></p>
     <h2 class="h-script script rv" id="fh"><span class="v-cpl">You’re invited into our story</span><span class="v-fam">वर-वधू की ओर से एक भेंट</span></h2>
-    <p class="lead lyric rv"><span class="v-cpl">Turn your sound on. It begins with a song.</span><span class="v-fam">आयुषी और रोहन ने यह फ़िल्म आपके लिए बनाई है। कृपया आवाज़ चालू करें।</span></p>
+    <p class="lead lyric rv"><span class="v-cpl">Turn your sound on. It begins with a song.</span><span class="v-fam">आयुषी और रोहन ने यह फ़िल्म आपके लिए बनाई है।</span></p>
     <div class="mat rv">
       <div class="player">
         <video id="v" playsinline webkit-playsinline preload="metadata" poster="/assets/poster.jpg" src="/assets/film.mp4"></video>
@@ -390,7 +391,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <div class="in">
     <p class="label rv"><span class="v-cpl">Chapter two</span><span class="v-fam">दूसरा अध्याय</span></p>
     <h2 class="h-script script rv" id="sh"><span class="v-cpl">Two hearts, one story</span><span class="v-fam">दो दिल, एक कहानी</span></h2>
-    <p class="mith lyric rv"><span class="v-cpl">From the lands of Mithila and Bhojpur, two stories became one.</span><span class="v-fam">मिथिला की बेटी, भोजपुर के बेटे संग। दो परिवार, अब एक।</span></p>
+    <p class="mith lyric rv"><span class="v-cpl">From the lands of Mithila and Bhojpur, two stories became one.</span><span class="v-fam">मिथिला की बेटी और भोजपुर का बेटा, अब जीवनसाथी बनने जा रहे हैं। दो परिवार, अब एक हो रहे हैं।</span></p>
     <div class="album">
       <figure class="pol pol1 rv"><span class="tape"></span><img src="/assets/couple-1.jpg" width="480" height="332" alt="Ayushi and Rohan by the sea" loading="lazy"></figure>
       <figure class="pol pol2 rv"><span class="tape" style="transform:rotate(5deg)"></span><img src="/assets/couple-2.jpg" width="476" height="566" alt="Rohan and Ayushi smiling at each other" loading="lazy"></figure>
@@ -451,7 +452,7 @@ footer p.script{font-style:normal;color:var(--ivory)}
   <div class="in">
     <p class="label rv"><span class="v-cpl">The last page is yours</span><span class="v-fam">कृपया सूचित करें</span></p>
     <h2 class="h-script script rv" id="rh"><span class="v-cpl">Will you celebrate with us?</span><span class="v-fam">आपकी प्रतीक्षा रहेगी</span></h2>
-    <p class="lyric rv" style="font-size:20px"><span class="v-cpl">Please let us know if you can join us.</span><span class="v-fam">कृपया बताएँ कि आप पधार सकेंगे या नहीं, ताकि हम आपके स्वागत की उचित व्यवस्था कर सकें।</span></p>
+    <p class="lyric rv cpl-only" style="font-size:20px">Please let us know if you can join us.</p>
     <div class="form rv" id="form">
       <div class="ask">
         <div class="two" role="group" aria-label="Your reply">
